@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View All videos</title>
+    <title>Video Player</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -32,26 +32,31 @@
     <!-- Main Content -->
     <div class="col-md-10">
       <div class="p-4">
-        <h2>Video List</h2>
-        <div class="mb-3">
-          <input type="text" class="form-control" placeholder="Search your video here..." />
+        <!-- Video Player -->
+        <div class="mb-4">
+          <div class="ratio ratio-16x9">
+            <iframe src="${currentVideo.link}" title="Video Player" allowfullscreen></iframe>
+          </div>
+          <h2 class="mt-3">${currentVideo.contentTitle}</h2>
+          <p>${currentVideo.contentDescription}</p>
         </div>
+
+        <!-- Video Recommendations -->
+        <h4>Recommended Videos</h4>
         <div class="row">
-  <!-- Loop through content list -->
-  <c:forEach var="content" items="${contentList}">
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <img src="https://via.placeholder.com/320x180" class="card-img-top" alt="Video Thumbnail">
-        <div class="card-body">
-          <h5 class="card-title">${content.contentTitle}</h5>
-          <p class="card-text">${content.contentDescription}</p>
-          <a href="/TVPSSMS/view/${content.contentID}" class="btn btn-primary btn-sm" target="_blank">View</a>
+          <!-- Loop through content list for recommendations -->
+          <c:forEach var="content" items="${contentList}">
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <img src="https://via.placeholder.com/320x180" class="card-img-top" alt="Video Thumbnail">
+                <div class="card-body">
+                  <h6 class="card-title">${content.contentTitle}</h6>
+                  <a href="/content?id=${content.contentID}" class="btn btn-link btn-sm">Watch</a>
+                </div>
+              </div>
+            </div>
+          </c:forEach>
         </div>
-      </div>
-    </div>
-  </c:forEach>
-</div>
-        
       </div>
     </div>
   </div>
