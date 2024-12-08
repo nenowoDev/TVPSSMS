@@ -19,18 +19,16 @@ public class CrewController {
 	@RequestMapping("/registration")
 	public ModelAndView viewRegistration(){
 		ModelAndView mav=new ModelAndView("crew/registration");
-		
 		return mav;
 	}
 	
 	@RequestMapping("/task")
 	public ModelAndView viewTask(){
 		ModelAndView mav=new ModelAndView("crew/task");
-		
 		return mav;
 	}
 	
 	
 	
 }
-
+ 
