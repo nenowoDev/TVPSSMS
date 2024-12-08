@@ -16,14 +16,20 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/content")
 public class ContentController {
 
-	@RequestMapping("/view")
-	public ModelAndView viewContent(){
-		ModelAndView mav=new ModelAndView("content/view");
+	@RequestMapping("/home")
+	public ModelAndView viewHome(){
+		ModelAndView mav=new ModelAndView("content/home");
 		
 		return mav;
 	}
 	
-	
+	@RequestMapping()
+	public ModelAndView viewContent(){
+		ModelAndView mav=new ModelAndView("content/view");
+		
+		
+		return mav;
+	}
 	
 }
 
