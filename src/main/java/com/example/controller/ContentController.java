@@ -31,5 +31,15 @@ public class ContentController {
 		return mav;
 	}
 	
+	
+	@RequestMapping()
+	public ModelAndView viewAnalytics(){
+		ModelAndView mav=new ModelAndView("content/analytics");
+		
+		
+		return mav;
+	}
+	
+	
 }
 
