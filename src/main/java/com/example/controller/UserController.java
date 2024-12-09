@@ -18,7 +18,7 @@ public class UserController {
     // Show login page
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login"; // Maps to /WEB-INF/views/login.jsp
+        return "user/login"; // Maps to /WEB-INF/views/login.jsp
     }
 
     // Handle login
@@ -31,13 +31,13 @@ public class UserController {
             }
         }
         model.addAttribute("error", "Invalid username or password.");
-        return "login"; // Stay on the login page
+        return "user/login"; // Stay on the login page
     }
 
     // Show registration page
     @GetMapping("/register")
     public String showRegistrationPage() {
-        return "register"; // Maps to /WEB-INF/views/register.jsp
+        return "user/register"; // Maps to /WEB-INF/views/register.jsp
     }
 
     // Handle registration
@@ -46,6 +46,6 @@ public class UserController {
                                @RequestParam String role, Model model) {
         users.add(new User(username, password, role));
         model.addAttribute("message", "User registered successfully!");
-        return "register";
+        return "user/register";
     }
 }

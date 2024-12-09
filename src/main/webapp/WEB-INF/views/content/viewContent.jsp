@@ -35,6 +35,7 @@
         <!-- Video Player -->
         <div class="mb-4">
           <div class="ratio ratio-16x9">
+          ${currentVideo.link }
             <iframe src="${currentVideo.link}" title="Video Player" allowfullscreen></iframe>
           </div>
           <h2 class="mt-3">${currentVideo.contentTitle}</h2>
