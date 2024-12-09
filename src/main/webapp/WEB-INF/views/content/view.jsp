@@ -45,7 +45,7 @@
         <div class="card-body">
           <h5 class="card-title">${content.contentTitle}</h5>
           <p class="card-text">${content.contentDescription}</p>
-          <a href="/TVPSSMS/view/${content.contentID}" class="btn btn-primary btn-sm" target="_blank">View</a>
+          <a href="/TVPSSMS/content/view/${content.contentID}" class="btn btn-primary btn-sm" target="_blank">View</a>
         </div>
       </div>
     </div>
