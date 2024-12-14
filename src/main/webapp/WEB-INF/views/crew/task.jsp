@@ -18,7 +18,7 @@
         <p>Teacher<br>teacher@moe-dl.edu.my</p>
         <ul class="nav flex-column">
           <li class="nav-item"><a href="#" class="nav-link text-white">Home</a></li>
-          <li class="nav-item"><a href="registration" class="nav-link text-white">Crew Registration List</a></li>
+          <li class="nav-item"><a href="registration " class="nav-link text-white">Crew Registration List</a></li>
           <li class="nav-item"><a href="task" class="nav-link text-white">Manage Crew Task</a></li>
           <li class="nav-item"><a href="#" class="nav-link text-white">Manage Program</a></li>
           <li class="nav-item"><a href="#" class="nav-link text-white">Manage Program Report</a></li>
