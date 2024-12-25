@@ -18,9 +18,11 @@ public class CrewController {
 
 	@RequestMapping("/registration")
 	public ModelAndView viewRegistration(){
-		ModelAndView mav=new ModelAndView("crew/registration");
-		return mav;
+	    ModelAndView mav = new ModelAndView("crew/registration");
+	    mav.addObject("attributeName", "value"); // Example attribute
+	    return mav;
 	}
+
 	
 	@RequestMapping("/task")
 	public ModelAndView viewTask(){

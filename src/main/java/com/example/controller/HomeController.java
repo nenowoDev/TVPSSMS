@@ -13,8 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/ok")
+@RequestMapping("/")
 public class HomeController {
+	
+	@RequestMapping("/")
+    public String index() {
+        return "index"; // This maps to index.jsp
+    }
 	
 	@RequestMapping("/homie")
 	@ResponseBody()
