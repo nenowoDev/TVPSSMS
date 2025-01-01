@@ -27,7 +27,7 @@
 	    <property name="templateMode" value="HTML" />
 	    <property name="characterEncoding" value="UTF-8" />
 	</bean>
-
+<mvc:resources location="/resources/**" mapping="/resources/"></mvc:resources>
 
     <bean id="templateEngine"
           class="org.thymeleaf.spring5.SpringTemplateEngine">
