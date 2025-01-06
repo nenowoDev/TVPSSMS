@@ -44,32 +44,18 @@
               <th>Status</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Ali bin Abu</td>
-              <td><button class="btn btn-primary btn-sm">Review</button></td>
-              <td><span class="badge bg-warning text-dark">In progress</span></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Aminah bin Masnawi</td>
-              <td><button class="btn btn-primary btn-sm">Review</button></td>
-              <td><span class="badge bg-success">Completed</span></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Cheong Wei Kiat</td>
-              <td><button class="btn btn-primary btn-sm">Review</button></td>
-              <td><span class="badge bg-danger">Reject</span></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Arvindra A/L Subramaniam</td>
-              <td><button class="btn btn-primary btn-sm">Review</button></td>
-              <td><span class="badge bg-warning text-dark">In progress</span></td>
-            </tr>
-          </tbody>
+			<tbody>
+			  <tr th:each="crew, iterStat : ${crewList}">
+			    <td th:text="${iterStat.count}"></td>
+			    <td th:text="${crew.name}"></td>
+			    <td>
+			      <a th:href="@{'/crew/review/' + ${crew.name}}" class="btn btn-primary btn-sm">Review</a>
+			    </td>
+			    <td>
+			      <span class="badge bg-warning text-dark">In Progress</span>
+			    </td>
+			  </tr>
+			</tbody>
         </table>
       </div>
     </div>
