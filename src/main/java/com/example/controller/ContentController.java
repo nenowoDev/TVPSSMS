@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.model.Content;
+import com.example.entity.Content;
 import com.example.service.ContentService;
 import java.util.List;
 
