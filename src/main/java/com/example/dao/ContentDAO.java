@@ -1,38 +1,77 @@
 package com.example.dao;
 
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.example.model.Content;
 
 @Repository
 public class ContentDAO {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    private final SessionFactory sessionFactory;
 
-    // Fetch all content
-    public List<Content> getAllContent() {
-        String query = "FROM Content";
-        return entityManager.createQuery(query, Content.class).getResultList();
+    @Autowired
+    public ContentDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
-    // Fetch content by ID
-    public Content getContentById(String contentID) {
-        return entityManager.find(Content.class, contentID);
+    // 1 - Get all content
+    public List<Content> findAll() {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Content", Content.class).list();
+        }
     }
 
-    // Save or update content
-    public void saveOrUpdateContent(Content content) {
-        entityManager.merge(content);
+    // 2 - Get content by ID
+    public Content findById(String contentID) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Content.class, contentID);
+        }
     }
 
-    // Delete content by ID
-    public void deleteContent(String contentID) {
-        Content content = getContentById(contentID);
-        if (content != null) {
-            entityManager.remove(content);
+    // 3 - Create a new content
+    public void save(Content content) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.save(content);
+            session.getTransaction().commit();
+        }
+    }
+
+    // 4 - Update an existing content
+    public void update(Content content) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(content);
+            session.getTransaction().commit();
+        }
+    }
+
+    // 5 - Delete content by ID
+    public void deleteById(String contentID) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Content content = session.get(Content.class, contentID);
+            if (content != null) {
+                session.delete(content);
+            }
+            session.getTransaction().commit();
+        }
+    }
+
+    // 6 - Search for content by title
+    public List<Content> searchByTitle(String title) {
+        try (Session session = sessionFactory.openSession()) {
+            String query = "FROM Content WHERE LOWER(contentTitle) LIKE :title";
+            return session.createQuery(query, Content.class)
+                          .setParameter("title", "%" + title.toLowerCase() + "%")
+                          .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

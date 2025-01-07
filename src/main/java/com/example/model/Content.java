@@ -1,19 +1,39 @@
 package com.example.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "content")
 public class Content {
-	public String contentID;
-	public String contentTitle;
-	public String contentDescription;
-	public String contentUploadDate;
-	public String contentType;
-	public String programID;
-	public String link;
-	
-	public Content() {
-		
-	}
-	
-	public Content(String contentID, String contentTitle, String contentDescription, String contentUploadDate, String contentType, String programID, String link) {
+    
+    @Id
+    @Column(name = "contentID")
+    private String contentID;
+
+    @Column(name = "contentTitle")
+    private String contentTitle;
+
+    @Column(name = "contentDescription")
+    private String contentDescription;
+
+    @Column(name = "contentUploadDate")
+    private String contentUploadDate;
+
+    @Column(name = "contentType")
+    private String contentType;
+
+    @Column(name = "programID")
+    private String programID;
+
+    @Column(name = "link")
+    private String link;
+
+    @Column(name = "owner")
+    private String owner;  // Assuming owner is a simple string, adjust if needed
+
+    public Content() {}
+
+    public Content(String contentID, String contentTitle, String contentDescription, String contentUploadDate, String contentType, String programID, String link, String owner) {
         this.contentID = contentID;
         this.contentTitle = contentTitle;
         this.contentDescription = contentDescription;
@@ -21,9 +41,10 @@ public class Content {
         this.contentType = contentType;
         this.programID = programID;
         this.link = link;
+        this.owner = owner;
     }
-	
-	// Getter and Setter for contentID
+
+    // Getter and Setter for contentID
     public String getContentID() {
         return contentID;
     }
@@ -85,5 +106,13 @@ public class Content {
     public void setLink(String link) {
         this.link = link;
     }
-	
+
+    // Getter and Setter for owner
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 }
