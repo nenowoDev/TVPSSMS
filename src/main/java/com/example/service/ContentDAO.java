@@ -1,4 +1,4 @@
-package com.example.dao;
+package com.example.service;
 
 import java.util.List;
 
@@ -6,7 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.example.model.Content;
+
+import com.example.entity.Content;
 
 @Repository
 public class ContentDAO {

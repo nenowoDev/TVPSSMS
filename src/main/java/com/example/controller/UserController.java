@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.model.User;
+import com.example.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
