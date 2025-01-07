@@ -20,7 +20,16 @@ public class ProgramController {
 	public ModelAndView viewContent(){
 		ModelAndView mav=new ModelAndView("program/view");
 		
-		return mav;
+		return mav;}
+		
+
+		
+		@RequestMapping("/add")
+		public ModelAndView addProgram(){
+			ModelAndView mav=new ModelAndView("program/add");
+			return mav;
+		
+		
 	}
 	
 	
