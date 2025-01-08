@@ -45,21 +45,23 @@
             </tr>
           </thead>
           <tbody>
-			  <tr th:each="crew, iterStat : ${crewList}">
-			    <td th:text="${iterStat.count}"></td>
-			    <td th:text="${crew.name}"></td>
-			    <td>
-			      <a th:href="@{'/crew/review/' + ${crew.id}}" class="btn btn-primary btn-sm">Review</a>
-			    </td>
-			    <td>
-				    <span th:class="|${crew.status == 'In Progress' ? 'badge bg-warning text-dark' : 
-				                      crew.status == 'Approved' ? 'badge bg-success text-white' : 
-				                      crew.status == 'Rejected' ? 'badge bg-danger text-white' : 'badge bg-secondary text-white'}|"
-				          th:text="${crew.status != null ? crew.status : 'No Status'}">
-				    </span>
-				</td>
-			  </tr>
-			</tbody>
+            <tr th:each="crew, iterStat : ${crewList}">
+              <td th:text="${iterStat.count}"></td>
+              <td th:text="${crew.name}"></td>
+              <td>
+                <a th:href="@{'/crew/review/' + ${crew.name}}" class="btn btn-primary btn-sm">Review</a>
+                <form th:action="@{'/crew/approve/' + ${crew.id}}" method="post" class="d-inline">
+                  <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                </form>
+                <form th:action="@{'/crew/reject/' + ${crew.id}}" method="post" class="d-inline">
+                  <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                </form>
+              </td>
+              <td>
+                <span class="badge bg-warning text-dark">In Progress</span>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>

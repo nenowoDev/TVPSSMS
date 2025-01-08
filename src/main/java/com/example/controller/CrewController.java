@@ -41,4 +41,35 @@ public class CrewController {
         crewDAO.deleteById(id);
         return "redirect:/crew/registration";
     }
+    
+    @GetMapping("/review/{id}")
+    public String reviewCrew(@PathVariable int id, Model model) {
+        // Fetch the Crew by ID to show their details
+        Crew crew = crewDAO.findById(id);
+        model.addAttribute("crew", crew);  // Add crew object to the model for review
+        return "crew/review";  // Return the review page view
+    }
+
+    @PostMapping("/approve/{id}")
+    public String approveCrew(@PathVariable int id) {
+        // Fetch the Crew by ID
+        Crew crew = crewDAO.findById(id);
+        if (crew != null) {
+            crew.setStatus("Approved");  // Update the status to 'Approved'
+            crewDAO.saveOrUpdate(crew);  // Save the changes
+        }
+        return "redirect:/crew/registration";  // Redirect back to the registration list
+    }
+
+    @PostMapping("/reject/{id}")
+    public String rejectCrew(@PathVariable int id) {
+        // Fetch the Crew by ID
+        Crew crew = crewDAO.findById(id);
+        if (crew != null) {
+            crew.setStatus("Rejected");  // Update the status to 'Rejected'
+            crewDAO.saveOrUpdate(crew);  // Save the changes
+        }
+        return "redirect:/crew/registration";  // Redirect back to the registration list
+    }
+
 }

@@ -42,4 +42,21 @@ public class CrewDAO {
             entityManager.remove(crew);
         }
     }
+    
+    // Find crews by status
+    public List<Crew> findByStatus(String status) {
+        return entityManager.createQuery("FROM Crew WHERE status = :status", Crew.class)
+                            .setParameter("status", status)
+                            .getResultList();
+    }
+
+    // Update crew status
+    public void updateStatus(int id, String status) {
+        Crew crew = findById(id);
+        if (crew != null) {
+            crew.setStatus(status);
+            entityManager.merge(crew);
+        }
+    }
+
 }

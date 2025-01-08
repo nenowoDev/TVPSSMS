@@ -24,12 +24,15 @@ public class Crew {
 
     @Column(name = "year")
     private String year;
+    
+    @Column(name = "status", nullable = false)
+    private String status = "Pending"; // Default to "Pending"
 
     // Default constructor
     public Crew() {
     }
 
-    // Parameterized constructor
+	// Parameterized constructor
     public Crew(String name, String email, String phoneNo, String position, String year) {
         this.name = name;
         this.email = email;
@@ -86,6 +89,14 @@ public class Crew {
     public void setYear(String year) {
         this.year = year;
     }
+    
+    public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
     // Override toString method for debugging
     @Override
