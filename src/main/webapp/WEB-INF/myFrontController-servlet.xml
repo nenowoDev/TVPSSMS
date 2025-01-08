@@ -18,7 +18,7 @@
     <context:component-scan base-package="com.example.controller" />
 
     <!-- Scan for Configuration, Service, Repository, and Entities -->
-    <context:component-scan base-package="config,com.example.service,com.example.entity,com.example.service" />
+    <context:component-scan base-package="config,com.example.service,com.example.entity" />
 
     <!-- Thymeleaf View Resolver -->
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
