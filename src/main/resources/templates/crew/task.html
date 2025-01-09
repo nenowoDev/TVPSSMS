@@ -16,15 +16,15 @@
         <h5>Teacher Avatar</h5>
         <p>Teacher<br>teacher@moe-dl.edu.my</p>
         <ul class="nav flex-column">
-          <li class="nav-item"><a href="#" class="nav-link text-white">Home</a></li>
-          <li class="nav-item"><a href="registration " class="nav-link text-white">Crew Registration List</a></li>
-          <li class="nav-item"><a href="task" class="nav-link text-white">Manage Crew Task</a></li>
-          <li class="nav-item"><a href="#" class="nav-link text-white">Manage Program</a></li>
-          <li class="nav-item"><a href="#" class="nav-link text-white">Manage Program Report</a></li>
-          <li class="nav-item"><a href="content/view" class="nav-link text-white">View Content</a></li>
-          <li class="nav-item"><a href="#" class="nav-link text-white">Settings</a></li>
-          <li class="nav-item"><a href="#" class="nav-link text-white">Help</a></li>
-          <li class="nav-item"><a href="#" class="nav-link text-white">Logout</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Home</a></li>
+          <li class="nav-item"><a th:href="@{/crew/registration}" class="nav-link text-white">Crew Registration List</a></li>
+          <li class="nav-item"><a th:href="@{/crew/task}" class="nav-link text-white">Manage Crew Task</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program Report</a></li>
+          <li class="nav-item"><a th:href="@{/content/view}" class="nav-link text-white">View Content</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Settings</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Help</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Logout</a></li>
         </ul>
       </div>
     </div>
@@ -32,6 +32,12 @@
     <div class="col-md-10">
       <div class="p-4">
         <h2>Manage Crew Task</h2>
+        
+        <!-- Add Task Button -->
+        <div class="mb-3">
+          <a th:href="@{/crew/task/form}" class="btn btn-success">Add Task</a>
+        </div>
+        
         <div class="mb-3">
           <input type="text" class="form-control" placeholder="Search your task here..." />
         </div>
@@ -46,36 +52,18 @@
             </tr>
           </thead>
           <tbody>
-          <tr>
-          <td>1</td>
-          <td>Edit Video for Program 1</td>
-          <td>Ali bin Abu</td>
-          <td>Multimedia</td>
-                        <td class="table-action-buttons">
-                            <button class="btn btn-sm btn-primary">Edit</button>
-                            <button class="btn btn-sm btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Publish Video Program 3 to Youtube</td>
-                        <td>Arvindra</td>
-                        <td>Multimedia</td>
-                        <td class="table-action-buttons">
-                            <button class="btn btn-sm btn-primary">Edit</button>
-                            <button class="btn btn-sm btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Plan Storyboard for Video Program 5</td>
-                        <td>Aminah binti Samad</td>
-                        <td>Art and Design</td>
-                        <td class="table-action-buttons">
-                            <button class="btn btn-sm btn-primary">Edit</button>
-                            <button class="btn btn-sm btn-danger">Delete</button>
-                        </td>
-                    </tr>
+          <tbody>
+			<tr th:each="task, iterStat : ${taskList}">
+			    <td th:text="${iterStat.count}"></td>
+			    <td th:text="${task.name}"></td>
+			    <td th:text="${task.crew.name}"></td>
+			    <td th:text="${task.role}"></td>
+			    <td class="table-action-buttons">
+			        <a th:href="@{'/crew/task/form?id=' + ${task.id}}" class="btn btn-sm btn-primary">Edit</a>
+			        <a th:href="@{'/crew/task/delete/' + ${task.id}}" class="btn btn-sm btn-danger">Delete</a>
+			    </td>
+			</tr>
+			</tbody>
                 </tbody>
         </table>
       </div>
