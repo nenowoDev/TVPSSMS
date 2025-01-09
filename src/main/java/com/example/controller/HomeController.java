@@ -18,7 +18,7 @@ public class HomeController {
 	
 	@RequestMapping("/")
     public String index() {
-        return "index"; // This maps to index.jsp
+        return "/user/login"; // This maps to index.jsp
     }
 	
 	@RequestMapping("/homie")
