@@ -20,6 +20,13 @@ public class UserController {
     public String showLoginPage() {
         return "user/login"; // Maps to /WEB-INF/views/login.jsp
     }
+    
+    @GetMapping("/loginrole")
+    public String showLoginRolePage() {
+        return "user/loginrole"; // Resolves to the `loginrole.html` template
+    }
+    
+    
 
     // Handle login
     @PostMapping("/login")
@@ -44,8 +51,10 @@ public class UserController {
     @PostMapping("/register")
     public String registerUser(@RequestParam String username, @RequestParam String password,
                                @RequestParam String role, Model model) {
-        users.add(new User(username, password, role));
+        users.add(new User());
         model.addAttribute("message", "User registered successfully!");
         return "user/register";
     }
+    
+    
 }
