@@ -82,10 +82,10 @@
 
         <!-- Content -->
         <div class="main-content">
-          <form action="submitProgram" method="POST" class="bg-white p-4 rounded">
+          <form th:action="@{/program/add}" method="POST" class="bg-white p-4 rounded">
             <div class="mb-3">
               <label for="programName" class="form-label">Program Name</label>
-              <input type="text" class="form-control" id="programName" name="programName" required>
+              <input type="text" class="form-control" id="programName" name="programName" placeholder="Enter program name" required>
             </div>
             <div class="mb-3">
               <label for="date" class="form-label">Date</label>
@@ -93,15 +93,15 @@
             </div>
             <div class="mb-3">
               <label for="location" class="form-label">Location</label>
-              <input type="text" class="form-control" id="location" name="location" required>
+              <input type="text" class="form-control" id="location" name="location" placeholder="Enter location" required>
             </div>
             <div class="mb-3">
               <label for="programDescription" class="form-label">Program Description</label>
-              <textarea class="form-control" id="programDescription" name="programDescription" rows="4" required></textarea>
+              <textarea class="form-control" id="programDescription" name="programDescription" rows="4" placeholder="Enter program description" required></textarea>
             </div>
             <div class="mb-3">
               <label for="imageUrl" class="form-label">Image URL</label>
-              <input type="url" class="form-control" id="imageUrl" name="imageUrl" required>
+              <input type="url" class="form-control" id="imageUrl" name="imageUrl" placeholder="Enter image URL" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>

@@ -1,38 +1,51 @@
 package com.example.controller;
 
-import java.util.Map;
-
+import com.example.entity.Program;
+import com.example.service.ProgramDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/program")
 public class ProgramController {
 
-	@RequestMapping("/view")
-	public ModelAndView viewContent(){
-		ModelAndView mav=new ModelAndView("program/view");
-		
-		return mav;}
-		
+    private final ProgramDAO programDAO;
 
-		
-		@RequestMapping("/add")
-		public ModelAndView addProgram(){
-			ModelAndView mav=new ModelAndView("program/add");
-			return mav;
-		
-		
-	}
-	
-	
-	
+    @Autowired
+    public ProgramController(ProgramDAO programDAO) {
+        this.programDAO = programDAO;
+    }
+
+    // View all programs
+    @GetMapping("/view")
+    public String viewContent(Model model) {
+        List<Program> programs = programDAO.findAll();
+        model.addAttribute("programs", programs);
+        return "program/view";
+    }
+
+    // Show the form to add a new program
+    @GetMapping("/add")
+    public String addProgramForm(Model model) {
+        model.addAttribute("program", new Program());
+        return "program/add";
+    }
+
+    // Handle the submission of the form to add a program
+    @PostMapping("/add")
+    public String addProgram(@ModelAttribute("program") Program program) {
+        programDAO.save(program);
+        return "redirect:/program/view";
+    }
+
+    // Delete a program by name
+    @GetMapping("/delete/{programName}")
+    public String deleteProgram(@PathVariable String programName) {
+        programDAO.deleteByProgramName(programName);
+        return "redirect:/program/view";
+    }
 }
-

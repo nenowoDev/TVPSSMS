@@ -1,0 +1,77 @@
+package com.example.service;
+
+import com.example.entity.Program;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public class ProgramDAO {
+
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public ProgramDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    // 1. Find all programs
+    public List<Program> findAll() {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("FROM Program", Program.class).list();
+        }
+    }
+
+    // 2. Find a program by name
+    public Program findByName(String programName) {
+        try (Session session = sessionFactory.openSession()) {
+            String query = "FROM Program WHERE programName = :programName";
+            return session.createQuery(query, Program.class)
+                    .setParameter("programName", programName)
+                    .uniqueResult();
+        }
+    }
+
+    // 3. Save a new program
+    public void save(Program program) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.save(program);
+            session.getTransaction().commit();
+        }
+    }
+
+    // 4. Update an existing program
+    public void update(Program program) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(program);
+            session.getTransaction().commit();
+        }
+    }
+
+    // 5. Delete a program by name
+    public void deleteByName(String programName) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            String query = "DELETE FROM Program WHERE programName = :programName";
+            session.createQuery(query)
+                    .setParameter("programName", programName)
+                    .executeUpdate();
+            session.getTransaction().commit();
+        }
+    }
+
+    // 6. Search for programs by name (case-insensitive partial match)
+    public List<Program> searchByName(String partialName) {
+        try (Session session = sessionFactory.openSession()) {
+            String query = "FROM Program WHERE LOWER(programName) LIKE :partialName";
+            return session.createQuery(query, Program.class)
+                    .setParameter("partialName", "%" + partialName.toLowerCase() + "%")
+                    .list();
+        }
+    }
+}

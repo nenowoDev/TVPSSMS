@@ -1,15 +1,31 @@
-
 package com.example.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
-
+@Entity
+@Table(name = "programs") // Replace "programs" with your actual database table name
 public class Program {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generates the primary key
+    @Column(name = "id")
+    private Long id; // Add an ID field to uniquely identify each program
+
+    @Column(name = "program_name", nullable = false)
     private String programName;
+
+    @Column(name = "date", nullable = false)
     private Date date;
+
+    @Column(name = "location", nullable = false)
     private String location;
+
+    @Column(name = "program_description")
     private String programDescription;
-    private String imageUrl; // Assuming the image is stored as a URL or path
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
     // Constructors
     public Program() {
@@ -24,6 +40,14 @@ public class Program {
     }
 
     // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getProgramName() {
         return programName;
     }
@@ -64,11 +88,11 @@ public class Program {
         this.imageUrl = imageUrl;
     }
 
-    // ToString method
     @Override
     public String toString() {
-        return "ProgramPlanning{" +
-                "programName='" + programName + '\'' +
+        return "Program{" +
+                "id=" + id +
+                ", programName='" + programName + '\'' +
                 ", date=" + date +
                 ", location='" + location + '\'' +
                 ", programDescription='" + programDescription + '\'' +
