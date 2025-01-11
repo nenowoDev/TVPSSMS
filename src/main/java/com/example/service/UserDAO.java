@@ -1,82 +1,36 @@
 package com.example.service;
 
 import com.example.entity.User;
-import org.springframework.stereotype.Repository;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import java.util.List;
-
-@Repository
-@Transactional
+@Service
 public class UserDAO {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private SessionFactory sessionFactory;
 
-    /**
-     * Save a new user to the database.
-     *
-     * @param user The user to save.
-     */
-    public void save(User user) {
-        entityManager.persist(user);
-    }
-
-    /**
-     * Update an existing user in the database.
-     *
-     * @param user The user to update.
-     */
-    public void update(User user) {
-        entityManager.merge(user);
-    }
-
-    /**
-     * Delete a user by their ID.
-     *
-     * @param id The ID of the user to delete.
-     */
-    public void deleteById(int id) {
-        User user = findById(id);
-        if (user != null) {
-            entityManager.remove(user);
+    @Transactional
+    public void registerUser(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        try {
+            session.save(user);
+        } catch (Exception e) {
+            System.out.println("Error saving user: " + e.getMessage());
+            throw e; // Re-throw to let the transaction roll back
         }
     }
-
-    /**
-     * Find a user by their ID.
-     *
-     * @param id The ID of the user.
-     * @return The user if found, otherwise null.
-     */
-    public User findById(int id) {
-        return entityManager.find(User.class, id);
-    }
-
-    /**
-     * Find a user by their username.
-     *
-     * @param username The username of the user.
-     * @return The user if found, otherwise null.
-     */
-    public User findByUsername(String username) {
-        String query = "FROM User WHERE username = :username";
-        List<User> result = entityManager.createQuery(query, User.class)
-                .setParameter("username", username)
-                .getResultList();
-
-        return result.isEmpty() ? null : result.get(0);
-    }
-
-    /**
-     * Retrieve all users from the database.
-     *
-     * @return A list of all users.
-     */
-    public List<User> findAll() {
-        String query = "FROM User";
-        return entityManager.createQuery(query, User.class).getResultList();
+    public User getUserByUsername(String username) {
+        Session session = sessionFactory.getCurrentSession();
+        try {
+            return session.createQuery("FROM User WHERE username = :username", User.class)
+                    .setParameter("username", username)
+                    .uniqueResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
