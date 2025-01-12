@@ -1,36 +1,28 @@
 package com.example.service;
 
-import com.example.entity.User;
+import org.springframework.stereotype.Repository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+import com.example.entity.User;
+
+@Repository
 public class UserDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Transactional
-    public void registerUser(User user) {
+    public void save(User user) {
         Session session = sessionFactory.getCurrentSession();
-        try {
-            session.save(user);
-        } catch (Exception e) {
-            System.out.println("Error saving user: " + e.getMessage());
-            throw e; // Re-throw to let the transaction roll back
-        }
+        session.saveOrUpdate(user);
     }
-    public User getUserByUsername(String username) {
+
+    @Transactional
+    public User findByUsername(String username) {
         Session session = sessionFactory.getCurrentSession();
-        try {
-            return session.createQuery("FROM User WHERE username = :username", User.class)
-                    .setParameter("username", username)
-                    .uniqueResult();
-        } catch (Exception e) {
-            return null;
-        }
+        return session.get(User.class, username);
     }
 }

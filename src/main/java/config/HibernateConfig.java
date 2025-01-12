@@ -22,8 +22,8 @@ public class HibernateConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/tvpssms"); // Update if default port is used
-        dataSource.setUsername("john_doe");
-        dataSource.setPassword("password"); // Replace with your MySQL password
+        dataSource.setUsername("root");
+        dataSource.setPassword(""); // Replace with your MySQL password
         return dataSource;
     }
 
