@@ -1,133 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Program Plans</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .sidebar {
-      background-color: #2E4D9D;
-      color: white;
-      min-height: 100vh;
-    }
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 15px;
-      display: block;
-      border-radius: 5px;
-    }
-    .sidebar a:hover {
-      background-color: #405FBF;
-    }
-    .header {
-      background-color: #F4F4F9;
-      padding: 15px;
-      border-bottom: 1px solid #DDD;
-    }
-    .header .date {
-      font-size: 14px;
-      color: gray;
-    }
-    .main-content {
-      background-color: #F9FAFD;
-      padding: 20px;
-    }
-    .main-content h2 {
-      color: #333;
-    }
-    .btn-edit {
-      background-color: #007BFF;
-      color: white;
-      border: none;
-    }
-    .btn-delete {
-      background-color: #DC3545;
-      color: white;
-      border: none;
-    }
-    .btn-add {
-      background-color: #007BFF;
-      color: white;
-      border: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View All Programs</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <nav class="col-md-2 sidebar p-3">
-        <div class="text-center mb-3">
-          <img src="teacher-avatar.png" alt="Teacher Avatar" class="rounded-circle mb-2" width="80">
-          <h5>Teacher</h5>
-          <p>teacher@moe-dl.edu.my</p>
-        </div>
-        <a href="#">Home</a>
-        <a href="#">Manage Studio</a>
-        <a href="#">Crew Registration List</a>
-        <a href="#">Manage Crew Task</a>
-        <a href="#" class="bg-light text-dark">Manage Program</a>
-        <a href="#">Manage Program Report</a>
-        <a href="#">View Content</a>
-        <a href="#">Settings</a>
-        <a href="#">Help</a>
-        <a href="#">Logout</a>
-      </nav>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 bg-primary text-white min-vh-100">
+      <div class="p-3">
+        <h5 class="mb-3">Teacher Avatar</h5>
+        <p class="mb-4">Teacher<br>teacher@moe-dl.edu.my</p>
+        <ul class="nav flex-column">
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Home</a></li>
+          <li class="nav-item"><a th:href="@{/crew/registration}" class="nav-link text-white">Crew Registration List</a></li>
+          <li class="nav-item"><a th:href="@{/crew/task}" class="nav-link text-white">Manage Crew Task</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program Report</a></li>
+          <li class="nav-item"><a th:href="@{/content/view}" class="nav-link text-white">View Content</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Settings</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Help</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Logout</a></li>
+        </ul>
+      </div>
+    </div>
 
-      <!-- Main Content -->
-      <div class="col-md-10">
-        <!-- Header -->
-        <div class="header d-flex justify-content-between align-items-center">
-          <h3>Program Plans</h3>
-          <div class="d-flex align-items-center">
-            <span class="date"></span>
+    <!-- Main Content -->
+    <div class="col-md-9 col-lg-10">
+      <div class="p-4">
+        <h2 class="mb-4">Program List</h2>
+
+        <!-- Add Program Button -->
+        <div class="mb-4 d-flex justify-content-between align-items-center">
+          <input type="text" class="form-control w-75" placeholder="Search for a program here..." />
+          <a th:href="@{/program/add}" class="btn btn-primary ms-3">Add Program</a>
+        </div>
+
+        <!-- Program List -->
+        <div class="row">
+          <!-- Loop through program list using Thymeleaf -->
+          <div th:each="program : ${programs}" class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title" th:text="${program.programName}">Program Name</h5>
+                <p class="card-text">Date: <span th:text="${program.date}">Program Date</span></p>
+                <p class="card-text">Description: <span th:text="${program.description}">Program Description</span></p>
+                <a th:href="@{/program/view/{id}(id=${program.id})}" class="btn btn-primary btn-sm">View</a>
+                <a th:href="@{/program/edit/{id}(id=${program.id})}" class="btn btn-warning btn-sm">Edit</a>
+                <a th:href="@{/program/delete/{id}(id=${program.id})}" 
+                   class="btn btn-danger btn-sm" 
+                   onclick="return confirm('Are you sure you want to delete this program?');">
+                   Delete
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Content -->
-        <div class="main-content">
-          <a href="add" class="btn btn-add mb-3">Add Program</a>
-          <table class="table table-bordered bg-white">
-            <thead class="table-light">
-              <tr>
-                <th>SN</th>
-                <th>Program Name</th>
-                <th>Date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dynamic Rows Placeholder -->
-              <!-- Replace with server-side or JavaScript-generated content -->
-              <!-- Example: -->
-              <!--
-              <tr>
-                <td>1</td>
-                <td>Program A</td>
-                <td>20/08/2023</td>
-                <td>
-                  <a href="editProgram.html?id=1" class="btn btn-sm btn-edit">Edit</a>
-                  <a href="deleteProgram.html?id=1" class="btn btn-sm btn-delete">Delete</a>
-                </td>			
-              </tr>
-              -->
-              <tr>
-                <td colspan="4" class="text-center">No programs found</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+        <!-- No Programs Found Message -->
+        <div th:if="${programs.empty}" class="text-center mt-4">
+          <p class="text-muted">No programs found. Click "Add Program" to create a new one.</p>
+    

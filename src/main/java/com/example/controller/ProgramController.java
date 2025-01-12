@@ -24,6 +24,7 @@ public class ProgramController {
     @GetMapping("/view")
     public String viewContent(Model model) {
         List<Program> programs = programDAO.findAll();
+        programs.forEach(System.out::println); // Log each program
         model.addAttribute("programs", programs);
         return "program/view";
     }
@@ -45,7 +46,7 @@ public class ProgramController {
     // Delete a program by name
     @GetMapping("/delete/{programName}")
     public String deleteProgram(@PathVariable String programName) {
-        programDAO.deleteByProgramName(programName);
+        programDAO.deleteByName(programName);
         return "redirect:/program/view";
     }
 }

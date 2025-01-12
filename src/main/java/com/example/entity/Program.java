@@ -1,45 +1,27 @@
 package com.example.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Table(name = "programs") // Replace "programs" with your actual database table name
+@Table(name = "program") // Maps to the "program" table in the database
 public class Program {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generates the primary key
-    @Column(name = "id")
-    private Long id; // Add an ID field to uniquely identify each program
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Assuming the primary key is auto-incremented
+    @Column(name = "id") // Maps to the "id" column in the table
+    private Long id;
 
-    @Column(name = "program_name", nullable = false)
+    @Column(name = "program_name") // Maps to the "program_name" column in the table
     private String programName;
 
-    @Column(name = "date", nullable = false)
-    private Date date;
+    @Column(name = "description") // Maps to the "description" column in the table
+    private String description;
 
-    @Column(name = "location", nullable = false)
-    private String location;
+    @Column(name = "date") // Maps to the "date" column in the table
+    private String date; // Or LocalDate/LocalDateTime based on your schema
 
-    @Column(name = "program_description")
-    private String programDescription;
+    // Getters and setters
 
-    @Column(name = "image_url")
-    private String imageUrl;
-
-    // Constructors
-    public Program() {
-    }
-
-    public Program(String programName, Date date, String location, String programDescription, String imageUrl) {
-        this.programName = programName;
-        this.date = date;
-        this.location = location;
-        this.programDescription = programDescription;
-        this.imageUrl = imageUrl;
-    }
-
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -56,47 +38,19 @@ public class Program {
         this.programName = programName;
     }
 
-    public Date getDate() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getProgramDescription() {
-        return programDescription;
-    }
-
-    public void setProgramDescription(String programDescription) {
-        this.programDescription = programDescription;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    @Override
-    public String toString() {
-        return "Program{" +
-                "id=" + id +
-                ", programName='" + programName + '\'' +
-                ", date=" + date +
-                ", location='" + location + '\'' +
-                ", programDescription='" + programDescription + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                '}';
     }
 }
