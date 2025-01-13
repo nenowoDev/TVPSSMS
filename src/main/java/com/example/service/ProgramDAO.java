@@ -24,6 +24,13 @@ public class ProgramDAO {
             return session.createQuery("FROM Program", Program.class).list();
         }
     }
+    
+ // Find a program by ID
+    public Program findById(long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Program.class, id);
+        }
+    }
 
     // 2. Find a program by name
     public Program findByName(String programName) {

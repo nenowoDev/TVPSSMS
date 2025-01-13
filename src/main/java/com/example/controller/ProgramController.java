@@ -43,6 +43,18 @@ public class ProgramController {
         return "redirect:/program/view";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editProgramForm(@PathVariable Long id, Model model) {
+        Program program = programDAO.findById(id);
+        model.addAttribute("program", program);
+        return "program/edit"; // Points to the Thymeleaf template
+    }
+
+    @PostMapping("/edit")
+    public String updateProgram(@ModelAttribute("program") Program program) {
+        programDAO.update(program);
+        return "redirect:/program/view"; // Redirect to program list
+    }
     // Delete a program by name
     @GetMapping("/delete/{programName}")
     public String deleteProgram(@PathVariable String programName) {

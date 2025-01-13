@@ -13,6 +13,10 @@ public class Program {
 
     @Column(name = "program_name") // Maps to the "program_name" column in the table
     private String programName;
+    
+    @Column(name = "location") // Maps to the "location" column in the table
+    private String location;
+    
 
     @Column(name = "description") // Maps to the "description" column in the table
     private String description;
@@ -37,6 +41,15 @@ public class Program {
     public void setProgramName(String programName) {
         this.programName = programName;
     }
+    
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    
 
     public String getDescription() {
         return description;
