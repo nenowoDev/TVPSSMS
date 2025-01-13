@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.entity.User;
 import com.example.service.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,24 @@ public class UserController {
     public String showLoginRolePage() {
         return "user/loginrole"; // Points to user/loginrole.html
     }
+    
+    
+ 
+    @GetMapping("/admin")
+    public String showAdminIndex() {
+        return "admin/index"; 
+    }
+    
+    @GetMapping("/teacher")
+    public String showTeacherIndex() {
+        return "teacher/index"; 
+    }
+    
+    @GetMapping("/student")
+    public String showStudentIndex() {
+        return "student/index"; 
+    }
+    
 
     // Handle login submission
     @PostMapping("/loginrole")
@@ -41,13 +60,19 @@ public class UserController {
                     .anyMatch(auth -> auth.getAuthority().equalsIgnoreCase(role));
 
             if (isPasswordValid && isRoleValid) {
-                model.addAttribute("message", "Welcome, " + username + " (" + role + ")!");
-                return "welcome"; // Redirect to a welcome page upon successful login
+                // Successful login, return with role-based redirection
+                if (role.equalsIgnoreCase("ROLE_ADMIN")) {
+                    return "redirect:/admin/index.html"; // Redirect to the admin page
+                } else if (role.equalsIgnoreCase("ROLE_TEACHER")) {
+                    return "redirect:/teacher/index.html"; // Redirect to the teacher page
+                } else if (role.equalsIgnoreCase("ROLE_STUDENT")) {
+                    return "redirect:/student/index.html"; // Redirect to the student page
+                }
             }
         }
 
         // Login failed, return with error
         model.addAttribute("error", "Invalid username, password, or role.");
-        return "user/loginrole";
+        return "user/loginrole"; // Return back to login page if failed
     }
 }

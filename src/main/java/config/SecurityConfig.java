@@ -18,6 +18,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	//using database auth
 	@Autowired
 	 private DataSource dataSource;
+	
+	@Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler; // Inject the custom handler
 		
 		    @Override
 		    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -50,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.formLogin()
 		.loginPage("/users/loginrole") // Specify your custom login page
-		.permitAll();
+		.permitAll()
+		 .successHandler(customAuthenticationSuccessHandler); // Use the custom success handler
 		
 	
 	}

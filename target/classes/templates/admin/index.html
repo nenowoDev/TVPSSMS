@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-2 bg-dark text-white min-vh-100">
+      <div class="p-3">
+        <h5>Admin Avatar</h5>
+        <p>Admin<br>admin@moe-dl.edu.my</p>
+        <ul class="nav flex-column">
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Dashboard</a></li>
+          <li class="nav-item"><a th:href="@{/user/manage}" class="nav-link text-white">Manage Users</a></li>
+          <li class="nav-item"><a th:href="@{/system/settings}" class="nav-link text-white">System Settings</a></li>
+          <li class="nav-item"><a th:href="@{/reports/view}" class="nav-link text-white">View Reports</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Help</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="col-md-10">
+      <div class="p-4">
+        <!-- Welcome Section -->
+        <div class="mb-4">
+          <h1>Welcome to the Admin Dashboard</h1>
+          <p class="text-muted">Manage users, settings, and system operations effectively.</p>
+        </div>
+        <!-- System Notices Section -->
+        <div class="mb-4">
+          <h3>System Notices</h3>
+          <ul class="list-group">
+            <li class="list-group-item">New user role policies implemented.</li>
+            <li class="list-group-item">System backup completed successfully.</li>
+            <li class="list-group-item">Security updates available for installation.</li>
+          </ul>
+        </div>
+        <!-- Quick Links Section -->
+        <div>
+          <h3>Quick Links</h3>
+          <div class="d-flex gap-3">
+            <a th:href="@{/user/manage}" class="btn btn-primary">Manage Users</a>
+            <a th:href="@{/reports/view}" class="btn btn-secondary">View Reports</a>
+            <a th:href="@{/system/settings}" class="btn btn-warning">System Settings</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
