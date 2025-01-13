@@ -58,5 +58,13 @@ public class CrewDAO {
             entityManager.merge(crew);
         }
     }
+    
+    // Retrieve a Crew entity by username
+    public Crew findByUsername(String username) {
+        List<Crew> crews = entityManager.createQuery("FROM Crew WHERE username = :username", Crew.class)
+                                        .setParameter("username", username)
+                                        .getResultList();
+        return crews.isEmpty() ? null : crews.get(0);
+    }
 
 }

@@ -11,23 +11,14 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-md-2 bg-primary text-white min-vh-100">
-      <div class="p-3">
-        <h5>Teacher Avatar</h5>
-        <p>Teacher<br>teacher@moe-dl.edu.my</p>
-        <ul class="nav flex-column">
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Home</a></li>
-          <li class="nav-item"><a th:href="@{/crew/registration}" class="nav-link text-white">Crew Registration List</a></li>
-          <li class="nav-item"><a th:href="@{/crew/task}" class="nav-link text-white">Manage Crew Task</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program Report</a></li>
-          <li class="nav-item"><a th:href="@{/content/view}" class="nav-link text-white">View Content</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Settings</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Help</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Logout</a></li>
-        </ul>
-      </div>
-    </div>
+        <div class="col-md-2 bg-primary text-white min-vh-100">
+            <div th:if="${#authentication.principal.authorities.contains('ROLE_TEACHER')}" 
+                 th:insert="sidebar/teacher :: sidebar"></div>
+            <div th:if="${#authentication.principal.authorities.contains('ROLE_STUDENT')}" 
+                 th:insert="sidebar/student :: sidebar"></div>
+            <div th:if="${#authentication.principal.authorities.contains('ROLE_ADMIN')}" 
+                 th:insert="sidebar/admin :: sidebar"></div>
+        </div>
     <!-- Main Content -->
     <div class="col-md-10">
       <div class="p-4">

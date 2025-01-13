@@ -13,6 +13,9 @@ public class Crew {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
@@ -24,7 +27,7 @@ public class Crew {
 
     @Column(name = "year")
     private String year;
-    
+
     @Column(name = "status", nullable = false)
     private String status = "Pending"; // Default to "Pending"
 
@@ -32,9 +35,10 @@ public class Crew {
     public Crew() {
     }
 
-	// Parameterized constructor
-    public Crew(String name, String email, String phoneNo, String position, String year) {
+    // Parameterized constructor
+    public Crew(String name, String username, String email, String phoneNo, String position, String year) {
         this.name = name;
+        this.username = username;
         this.email = email;
         this.phoneNo = phoneNo;
         this.position = position;
@@ -56,6 +60,14 @@ public class Crew {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -89,19 +101,19 @@ public class Crew {
     public void setYear(String year) {
         this.year = year;
     }
-    
-    public String getStatus() {
-		return status;
-	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     // Override toString method for debugging
     @Override
     public String toString() {
-        return "Crew [id=" + id + ", name=" + name + ", email=" + email + ", phoneNo=" + phoneNo +
-                ", position=" + position + ", year=" + year + "]";
+        return "Crew [id=" + id + ", name=" + name + ", username=" + username + ", email=" + email + ", phoneNo="
+                + phoneNo + ", position=" + position + ", year=" + year + ", status=" + status + "]";
     }
 }

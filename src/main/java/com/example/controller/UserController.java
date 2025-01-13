@@ -25,8 +25,6 @@ public class UserController {
         return "user/loginrole"; // Points to user/loginrole.html
     }
     
-    
- 
     @GetMapping("/admin")
     public String showAdminIndex() {
         return "admin/index"; 
