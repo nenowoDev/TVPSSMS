@@ -56,9 +56,10 @@ public class ProgramController {
         return "redirect:/program/view"; // Redirect to program list
     }
     // Delete a program by name
-    @GetMapping("/delete/{programName}")
-    public String deleteProgram(@PathVariable String programName) {
-        programDAO.deleteByName(programName);
+ // Delete a program by ID
+    @GetMapping("/delete/{id}")
+    public String deleteProgram(@PathVariable Long id) {
+        programDAO.deleteById(id); // Use ID instead of programName
         return "redirect:/program/view";
     }
 }

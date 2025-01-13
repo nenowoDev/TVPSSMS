@@ -60,14 +60,15 @@ public class ProgramDAO {
         }
     }
 
-    // 5. Delete a program by name
-    public void deleteByName(String programName) {
+
+    // Delete a program by ID
+    public void deleteById(long id) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "DELETE FROM Program WHERE programName = :programName";
-            session.createQuery(query)
-                    .setParameter("programName", programName)
-                    .executeUpdate();
+            Program program = session.get(Program.class, id);
+            if (program != null) {
+                session.delete(program);
+            }
             session.getTransaction().commit();
         }
     }

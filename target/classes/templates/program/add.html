@@ -1,111 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Program</title>
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .sidebar {
-      background-color: #2E4D9D;
-      color: white;
-      min-height: 100vh;
-    }
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 15px;
-      display: block;
-      border-radius: 5px;
-    }
-    .sidebar a:hover {
-      background-color: #405FBF;
-    }
-    .header {
-      background-color: #F4F4F9;
-      padding: 15px;
-      border-bottom: 1px solid #DDD;
-    }
-    .header .date {
-      font-size: 14px;
-      color: gray;
-    }
-    .main-content {
-      background-color: #F9FAFD;
-      padding: 20px;
-    }
-    .main-content h2 {
-      color: #333;
-    }
-    .btn-primary {
-      background-color: #007BFF;
-      color: white;
-      border: none;
-    }
-  </style>
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <nav class="col-md-2 sidebar p-3">
-        <div class="text-center mb-3">
-          <h5 class="mb-3">Teacher Avatar</h5>
-          <p class="mb-4">Teacher<br>teacher@moe-dl.edu.my</p>
-        </div>
-        <a href="#">Home</a>
-        <a href="#">Manage Studio</a>
-        <a href="#">Crew Registration List</a>
-        <a href="#">Manage Crew Task</a>
-        <a href="#" class="bg-light text-dark">Manage Program</a>
-        <a href="#">Manage Program Report</a>
-        <a href="#">View Content</a>
-        <a href="#">Settings</a>
-        <a href="#">Help</a>
-        <a href="#">Logout</a>
-      </nav>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 bg-primary text-white min-vh-100">
+      <div class="p-3">
+        <h5 class="mb-3">Teacher</h5>
+        <p class="mb-4">Teacher<br>teacher@moe-dl.edu.my</p>
+        <ul class="nav flex-column">
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Home</a></li>
+          <li class="nav-item"><a th:href="@{/crew/registration}" class="nav-link text-white">Crew Registration List</a></li>
+          <li class="nav-item"><a th:href="@{/crew/task}" class="nav-link text-white">Manage Crew Task</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program Report</a></li>
+          <li class="nav-item"><a th:href="@{/content/view}" class="nav-link text-white">View Content</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Settings</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Help</a></li>
+          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Logout</a></li>
+        </ul>
+      </div>
+    </div>
 
-      <!-- Main Content -->
-      <div class="col-md-10">
-        <!-- Header -->
-        <div class="header d-flex justify-content-between align-items-center">
-          <h3>Add Program</h3>
-          <div class="d-flex align-items-center">
-            <span class="date">Tuesday, 20/08/2023</span>
+    <!-- Main Content -->
+    <div class="col-md-9 col-lg-10">
+      <div class="p-4">
+        <h2 class="mb-4">Add Program</h2>
+        <form th:action="@{/program/add}" method="POST">
+          <div class="mb-3">
+            <label for="programName" class="form-label">Program Name</label>
+            <input type="text" class="form-control" id="programName" name="programName" placeholder="Enter program name" required>
           </div>
-        </div>
-
-        <!-- Content -->
-        <div class="main-content">
-          <form th:action="@{/program/add}" method="POST" class="bg-white p-4 rounded">
-            <div class="mb-3">
-              <label for="programName" class="form-label">Program Name</label>
-              <input type="text" class="form-control" id="programName" name="programName" placeholder="Enter program name" required>
-            </div>
-            <div class="mb-3">
-              <label for="date" class="form-label">Date</label>
-              <input type="date" class="form-control" id="date" name="date" required>
-            </div>
-            <div class="mb-3">
-              <label for="location" class="form-label">Location</label>
-              <input type="text" class="form-control" id="location" name="location" placeholder="Enter location" required>
-            </div>
-            <div class="mb-3">
-              <label for="programDescription" class="form-label">Program Description</label>
-              <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter program description" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+          </div>
+          <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control" id="location" name="location" placeholder="Enter location" required>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter description" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Program</button>
+        </form>
       </div>
     </div>
   </div>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
