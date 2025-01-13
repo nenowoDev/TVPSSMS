@@ -26,6 +26,8 @@ public class RegisterController {
 		return "user/register";
 	}
 	
+	
+	
 	@PostMapping("/register")
 	public String register(String username, String password, String confirmPassword, String role, Model model) {
 	    if (!password.equals(confirmPassword)) {
@@ -58,7 +60,7 @@ public class RegisterController {
 	    // Save User
 	    userDAO.save(user);
 
-	    return "redirect:/login"; // Redirect to login after successful registration
+	    return "redirect:/users/loginrole"; // Redirect to login after successful registration
 	}
 
 }

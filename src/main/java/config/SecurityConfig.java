@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest().authenticated() // Restrict access to other endpoints
 		.and()
 		.formLogin()
+		.loginPage("/users/loginrole") // Specify your custom login page
 		.permitAll();
 		
 	
