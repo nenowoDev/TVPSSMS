@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin()
                 .loginPage("/users/loginrole") // Custom login page
+                .failureUrl("/users/loginrole?error=true") // Redirect to login page with error if failed
                 .permitAll() // Allow all users to access the login page
                 .successHandler(customAuthenticationSuccessHandler); // Use custom success handler after successful login
     }

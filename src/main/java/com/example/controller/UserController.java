@@ -19,9 +19,12 @@ public class UserController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    // Render custom login page
+ // Render custom login page
     @GetMapping("/loginrole")
-    public String showLoginRolePage() {
+    public String showLoginRolePage(@RequestParam(value = "error", required = false) String error, Model model) {
+        if (error != null) {
+            model.addAttribute("error", "Invalid username or password");
+        }
         return "user/loginrole"; // Points to user/loginrole.html
     }
     
@@ -40,6 +43,8 @@ public class UserController {
         return "student/index"; 
     }
     
+
+ 
 
     // Handle login submission
     @PostMapping("/loginrole")
