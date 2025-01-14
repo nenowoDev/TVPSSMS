@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Program;
+import com.example.entity.Report;
 import com.example.service.ProgramDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,5 +62,12 @@ public class ProgramController {
     public String deleteProgram(@PathVariable Long id) {
         programDAO.deleteById(id); // Use ID instead of programName
         return "redirect:/program/view";
+    }
+    
+    @GetMapping("/view/{id}")
+    public String viewReport(@PathVariable Long id, Model model) {
+        Program program = programDAO.findById(id); // Fetch the report
+        model.addAttribute("program", program);
+        return "program/view-program"; // Point to a detailed view template
     }
 }
