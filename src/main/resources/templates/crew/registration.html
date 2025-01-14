@@ -36,33 +36,49 @@
       <div class="p-4">
         <h2>Pending Crew Registrations</h2>
         <div class="mb-3">
-          <input type="text" class="form-control" placeholder="Search crew name here..." />
-        </div>
+		    <form th:action="@{/crew/registration}" method="get" class="d-flex">
+		        <input
+		            type="text"
+		            class="form-control me-2"
+		            name="search"
+		            th:value="${search}"
+		            placeholder="Search by name, position, or year..."
+		        />
+		        <button type="submit" class="btn btn-primary">Search</button>
+		    </form>
+		</div>
         <table class="table">
           <thead class="table-light">
             <tr>
               <th>No.</th>
               <th>Name</th>
+              <th>Position</th>
+              <th>Year</th>
               <th>Action</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-			  <tr th:each="crew, iterStat : ${crewList}">
-			    <td th:text="${iterStat.count}"></td>
-			    <td th:text="${crew.name}"></td>
-			    <td>
-			      <a th:href="@{'/crew/review/' + ${crew.id}}" class="btn btn-primary btn-sm">Review</a>
-			    </td>
-			    <td>
-				    <span th:class="|${crew.status == 'In Progress' ? 'badge bg-warning text-dark' : 
-				                      crew.status == 'Approved' ? 'badge bg-success text-white' : 
-				                      crew.status == 'Rejected' ? 'badge bg-danger text-white' : 'badge bg-secondary text-white'}|"
-				          th:text="${crew.status != null ? crew.status : 'No Status'}">
-				    </span>
-				</td>
-			  </tr>
-			</tbody>
+		    <tr th:if="${#lists.isEmpty(crewList)}">
+		        <td colspan="6" class="text-center">No crews found.</td>
+		    </tr>
+		    <tr th:each="crew, iterStat : ${crewList}">
+		        <td th:text="${iterStat.count}"></td>
+		        <td th:text="${crew.name}"></td>
+		        <td th:text="${crew.position}"></td>
+		        <td th:text="${crew.year}"></td>
+		        <td>
+		            <a th:href="@{'/crew/review/' + ${crew.id}}" class="btn btn-primary btn-sm">Review</a>
+		        </td>
+		        <td>
+		            <span th:class="|${crew.status == 'In Progress' ? 'badge bg-warning text-dark' : 
+		                              crew.status == 'Approved' ? 'badge bg-success text-white' : 
+		                              crew.status == 'Rejected' ? 'badge bg-danger text-white' : 'badge bg-secondary text-white'}|"
+		                  th:text="${crew.status != null ? crew.status : 'No Status'}">
+		            </span>
+		        </td>
+		    </tr>
+		</tbody>
         </table>
       </div>
     </div>

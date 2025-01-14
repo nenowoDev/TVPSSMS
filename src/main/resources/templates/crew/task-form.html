@@ -47,7 +47,9 @@
 	                <option 
 	                th:each="crew : ${crewList}" 
 	                th:value="${crew.id}" 
-	                th:text="${crew.name + ' (' + (crew.position != null ? crew.position : 'No Role') + ')'}"></option>
+	                th:text="${crew.name + ' (' + (crew.position != null ? crew.position : 'No Role') + ')'}"
+	                th:selected="${crew.id == crewId}">
+	                </option>
 	            </select>
 	        </div>
 	        <button type="submit" class="btn btn-primary">Save</button>

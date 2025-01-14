@@ -20,22 +20,31 @@ public class CrewController {
 
     @PreAuthorize("hasRole('TEACHER')")
     @GetMapping("/registration")
-    public String viewRegistrationPage(Authentication authentication, Model model) {
-    	// Fetch the current user
+    public String viewRegistrationPage(
+            @RequestParam(required = false) String search,
+            Authentication authentication,
+            Model model) {
+
+        // Fetch the current user
         String username = authentication.getName();
-        Crew existingCrew = crewDAO.findByUsername(username); // Assuming CrewDAO has this method
+        Crew existingCrew = crewDAO.findByUsername(username);
 
         if (existingCrew != null) {
             model.addAttribute("message", "You are already registered as a crew.");
         } else {
             model.addAttribute("message", "You are not registered as a crew yet.");
         }
-    	
-    	
-        List<Crew> crewList = crewDAO.findAll();
+
+        // Determine whether to perform a search or fetch all crews
+        List<Crew> crewList = (search != null && !search.isEmpty())
+                ? crewDAO.searchCrews(search)
+                : crewDAO.findAll();
+
         model.addAttribute("crewList", crewList);
+        model.addAttribute("search", search); // Retain search keyword in the form
         return "crew/registration";
     }
+
     
     @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/register")

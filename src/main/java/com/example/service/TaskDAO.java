@@ -44,4 +44,12 @@ public class TaskDAO {
         }
         return false; // Return false if task was not found
     }
+    
+    public List<Task> findByCrewNameOrTaskName(String search) {
+        String query = "FROM Task t WHERE LOWER(t.name) LIKE LOWER(:search) OR LOWER(t.crew.name) LIKE LOWER(:search)";
+        return entityManager.createQuery(query, Task.class)
+                            .setParameter("search", "%" + search + "%")
+                            .getResultList();
+    }
+
 }

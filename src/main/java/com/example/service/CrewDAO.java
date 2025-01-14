@@ -66,5 +66,15 @@ public class CrewDAO {
                                         .getResultList();
         return crews.isEmpty() ? null : crews.get(0);
     }
+    
+    public List<Crew> searchCrews(String keyword) {
+        String query = "FROM Crew WHERE LOWER(name) LIKE :keyword " +
+                       "OR LOWER(position) LIKE :keyword " +
+                       "OR CAST(year AS string) LIKE :keyword";
+        return entityManager.createQuery(query, Crew.class)
+                            .setParameter("keyword", "%" + keyword.toLowerCase() + "%")
+                            .getResultList();
+    }
+
 
 }

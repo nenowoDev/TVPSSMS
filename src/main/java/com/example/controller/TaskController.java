@@ -25,19 +25,39 @@ public class TaskController {
 
     // Display all tasks
     @GetMapping
-    public String viewTaskPage(Model model) {
-        List<Task> taskList = taskDAO.findAll();
+    public String viewTaskPage(@RequestParam(value = "search", required = false) String search, Model model) {
+        List<Task> taskList;
+
+        if (search != null && !search.trim().isEmpty()) {
+            // Fetch filtered tasks based on the search term
+            taskList = taskDAO.findByCrewNameOrTaskName(search.trim());
+        } else {
+            // Fetch all tasks if no search term is provided
+            taskList = taskDAO.findAll();
+        }
+
         model.addAttribute("taskList", taskList);
+        model.addAttribute("search", search);
+        
+        
         return "crew/task";
     }
+
 
     // Show form to add or edit a task
     @GetMapping("/form")
     public String showTaskForm(@RequestParam(required = false) Integer id, Model model) {
         Task task = (id != null) ? taskDAO.findById(id) : new Task();
-        List<Crew> crewList = crewDAO.findAll();
+        List<Crew> crewList = crewDAO.findAll().stream()
+                .filter(crew -> "Approved".equalsIgnoreCase(crew.getStatus()))
+                .toList();
         model.addAttribute("task", task);
         model.addAttribute("crewList", crewList);
+        
+     // Set crewId for form retention
+        if (task.getCrew() != null) {
+            model.addAttribute("crewId", task.getCrew().getId());
+        }
         return "crew/task-form";
     }
 

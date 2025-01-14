@@ -42,8 +42,18 @@
         </div>
         
         <div class="mb-3">
-          <input type="text" class="form-control" placeholder="Search your task here..." />
-        </div>
+		  <form th:action="@{/crew/task}" method="get" class="d-flex">
+		    <input
+		      type="text"
+		      class="form-control me-2"
+		      name="search"
+		      th:value="${param.search}"
+		      placeholder="Search by task or crew name..."
+		    />
+		    <button type="submit" class="btn btn-primary">Search</button>
+		  </form>
+		</div>
+
         <table class="table">
           <thead class="thead-light">
             <tr>
