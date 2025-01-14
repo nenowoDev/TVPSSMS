@@ -101,7 +101,6 @@ public class ContentController {
         
         
         ModelAndView modelAndView = new ModelAndView("content/manageall"); // View name
-        modelAndView.addObject("contents", contents);
         
         Optional<String> Orole=SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst();
         String role="";
@@ -112,6 +111,7 @@ public class ContentController {
         	contents=contentService.getAllContent();
         }
         modelAndView.addObject("role", role);
+        modelAndView.addObject("contents", contents);
         return modelAndView;
     }
 

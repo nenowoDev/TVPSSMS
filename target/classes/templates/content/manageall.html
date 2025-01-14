@@ -7,26 +7,38 @@
         /* General body styling */
         .body-container {
             font-family: Arial, sans-serif;
-            
             background-color: #f9f9f9;
             color: #333;
             display: flex; /* Flexbox for sidebar and content layout */
             flex-wrap: wrap;
+            min-height: 100vh;
         }
 
         /* Sidebar styling */
-        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 240px;
+            z-index: 100;
+            overflow-y: auto;
+        }
 
         /* Content section styling */
         .content-section {
+            margin-left: 260px; /* Account for sidebar */
+            padding: 20px;
             flex: 1; /* Content section takes remaining space */
-            margin-left: 20px;
+            background-color: #fff;
         }
 
         /* Page title styling */
         .page-title {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: bold;
         }
 
         /* Card container styling */
@@ -99,8 +111,29 @@
             text-decoration: underline;
         }
 
+        /* Sidebar customization for different roles */
+        .bg-success { background-color: #28a745 !important; }
+        .bg-primary { background-color: #007bff !important; }
+        .bg-dark { background-color: #343a40 !important; }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            .body-container {
+                flex-direction: column; /* Stack sidebar and content on smaller screens */
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+                margin-bottom: 20px;
+            }
+
+            .content-section {
+                margin-left: 0;
+                padding: 10px;
+            }
+
             .video-embed {
                 height: 150px;
             }
@@ -124,19 +157,6 @@
             .card-actions {
                 padding: 5px 10px;
             }
-
-            .body-container {
-                flex-direction: column; /* Stack sidebar and content on smaller screens */
-            }
-
-            .sidebar {
-                width: 100%; /* Full width for sidebar on small screens */
-                margin-bottom: 20px;
-            }
-
-            .content-section {
-                margin-left: 0;
-            }
         }
     </style>
 </head>
@@ -144,53 +164,50 @@
 
     <div class="body-container">
         <!-- Sidebar -->
-        <div class="col-md-2 bg-success text-white min-vh-100" th:if="${role == 'ROLE_STUDENT'}" th:include="~{/student/index.html :: sidebar}"></div>
-		<div class="col-md-2 bg-primary text-white min-vh-100" th:if="${role == 'ROLE_TEACHER'}" th:include="~{/teacher/index.html :: sidebar}"></div>
-		<div class="col-md-2 bg-dark text-white min-vh-100" th:if="${role == 'ROLE_ADMIN'}" th:include="~{/admin/index.html :: sidebar}"></div>
-	
-        <!-- Content Section -->
-        <h1 class="page-title">All Manageable Content</span></h1>
-    <div class="card-container">
-        <div class="content-card" th:each="content : ${contents}">
-            <iframe class="video-embed" th:src="${content.link}" allowfullscreen>
-            </iframe>
-            <div class="card-details">
-                <h2 class="content-title" th:text="${content.contentTitle}"></h2>
-                <p class="content-description" th:text="${content.contentDescription}"></p>
-                <p class="content-meta">
-                    <strong>Uploaded:</strong> <span th:text="${content.contentUploadDate}"></span><br>
-                    <strong>Type:</strong> <span th:text="${content.contentType}"></span><br>
-                    <strong>Program ID:</strong> <span th:text="${content.programID}"></span><br>
-                    <strong>Owner:</strong> <span th:text="${content.owner}"></span>
-                </p>
-            </div>
-            <div class="card-actions">
-                <a class="action-link" th:href="@{/content/{contentID}(contentID=${content.contentID})}">View</a>
-                <a class="action-link"
-                    th:href="@{/content/delete/{contentID}(contentID=${content.contentID})}">Delete</a>
-                <a class="action-link"
-                    th:href="@{/content/update/{contentID}(contentID=${content.contentID})}">Update</a>
+        <div class="sidebar bg-success text-white min-vh-100" th:if="${role == 'ROLE_STUDENT'}" th:include="~{/student/index.html :: sidebar}"></div>
+        <div class="sidebar bg-primary text-white min-vh-100" th:if="${role == 'ROLE_TEACHER'}" th:include="~{/teacher/index.html :: sidebar}"></div>
+        <div class="sidebar bg-dark text-white min-vh-100" th:if="${role == 'ROLE_ADMIN'}" th:include="~{/admin/index.html :: sidebar}"></div>
 
-                
+        <!-- Content Section -->
+        <div class="content-section">
+            <h1 class="page-title">All Manageable Content</h1>
+            <div class="card-container">
+                <div class="content-card" th:each="content : ${contents}">
+                    <iframe class="video-embed" th:src="${content.link}" allowfullscreen></iframe>
+                    <div class="card-details">
+                        <h2 class="content-title" th:text="${content.contentTitle}"></h2>
+                        <p class="content-description" th:text="${content.contentDescription}"></p>
+                        <p class="content-meta">
+                            <strong>Uploaded:</strong> <span th:text="${content.contentUploadDate}"></span><br>
+                            <strong>Type:</strong> <span th:text="${content.contentType}"></span><br>
+                            <strong>Program ID:</strong> <span th:text="${content.programID}"></span><br>
+                            <strong>Owner:</strong> <span th:text="${content.owner}"></span>
+                        </p>
+                    </div>
+                    <div class="card-actions">
+                        <a class="action-link" th:href="@{/content/{contentID}(contentID=${content.contentID})}">View</a>
+                        <a class="action-link" th:href="@{/content/delete/{contentID}(contentID=${content.contentID})}">Delete</a>
+                        <a class="action-link" th:href="@{/content/update/{contentID}(contentID=${content.contentID})}">Update</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <a href="add" style="text-decoration: none;">
+                    <button style="
+                        background-color: #4CAF50; 
+                        color: white; 
+                        border: none; 
+                        border-radius: 8px; 
+                        padding: 12px 20px; 
+                        font-size: 1rem; 
+                        cursor: pointer; 
+                        transition: background-color 0.3s;">
+                        + Add New Content
+                    </button>
+                </a>
             </div>
         </div>
-    </div>
-    
-      <div style="text-align: center; margin-bottom: 20px;">
-        <a href="add" style="text-decoration: none;">
-            <button style="
-                background-color: #4CAF50; 
-                color: white; 
-                border: none; 
-                border-radius: 8px; 
-                padding: 12px 20px; 
-                font-size: 1rem; 
-                cursor: pointer; 
-                transition: background-color 0.3s;">
-                + Add New Content
-            </button>
-        </a>
-    </div>
     </div>
 </body>
 </html>
