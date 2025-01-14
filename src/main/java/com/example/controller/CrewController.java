@@ -18,7 +18,7 @@ public class CrewController {
     @Autowired
     private CrewDAO crewDAO;
 
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasRole('TEACHER')")
     @GetMapping("/registration")
     public String viewRegistrationPage(Authentication authentication, Model model) {
     	// Fetch the current user
