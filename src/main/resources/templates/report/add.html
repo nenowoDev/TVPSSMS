@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="d-flex">
-       <!-- Sidebar -->
+          <!-- Sidebar -->
     <div class="col-md-2 bg-primary text-white min-vh-100" th:fragment="sidebar">
       <div class="p-3">
         <!-- Centering only the image -->
@@ -34,20 +34,21 @@
         <div class="content p-4" style="width: 100%;">
             <h1 class="mb-4">Add Report</h1>
             <form th:action="@{/report/add}" th:object="${report}" method="post">
-                <div class="mb-3">
-                    <label class="form-label">Program Name:</label>
-                    <span class="form-control-plaintext" th:text="${report.program.programName}"></span>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Program Date:</label>
-                    <span class="form-control-plaintext" th:text="${report.program.date}"></span>
-                </div>
-                <div class="mb-3">
-                    <label for="content" class="form-label">Report Content:</label>
-                    <textarea id="content" name="content" th:field="*{content}" class="form-control" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-success">Save</button>
-            </form>
+			    <div class="mb-3">
+			        <label class="form-label">Program Name:</label>
+			        <span class="form-control-plaintext" th:text="${report.program.programName}"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label class="form-label">Program Date:</label>
+			        <span class="form-control-plaintext" th:text="${report.program.date}"></span>
+			    </div>
+			    <input type="hidden" th:field="*{program.id}" />
+			    <div class="mb-3">
+			        <label for="content" class="form-label">Report Content:</label>
+			        <textarea id="content" name="content" th:field="*{content}" class="form-control" rows="5" required></textarea>
+			    </div>
+			    <button type="submit" class="btn btn-success">Save</button>
+			</form>
         </div>
     </div>
 

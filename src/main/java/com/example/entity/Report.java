@@ -11,7 +11,7 @@ public class Report {
 
     private String content;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "program_id")
     private Program program;
 

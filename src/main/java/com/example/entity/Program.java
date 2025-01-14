@@ -16,7 +16,6 @@ public class Program {
     
     @Column(name = "location") // Maps to the "location" column in the table
     private String location;
-    
 
     @Column(name = "description") // Maps to the "description" column in the table
     private String description;
