@@ -46,4 +46,8 @@ public class ContentService {
     public List<Content> searchContentByTitle(String title) {
         return contentDao.searchByTitle(title);
     }
+    
+    public List<Content> getContentbyOwner(String owner) {
+        return contentDao.findByOwner(owner);
+    }
 }

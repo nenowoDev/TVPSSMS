@@ -75,4 +75,17 @@ public class ContentDAO {
             return null;
         }
     }
+    
+ // 7 - Get content by owner
+    public List<Content> findByOwner(String owner) {
+        try (Session session = sessionFactory.openSession()) {
+            String query = "FROM Content WHERE LOWER(owner) = :owner";
+            return session.createQuery(query, Content.class)
+                          .setParameter("owner", owner.toLowerCase())
+                          .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

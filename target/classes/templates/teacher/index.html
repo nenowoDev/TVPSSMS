@@ -11,6 +11,7 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
+    <div th:fragment="sidebar">
     <div class="col-md-2 bg-primary text-white min-vh-100">
       <div class="p-3">
         <h5>Teacher Avatar</h5>
@@ -21,12 +22,14 @@
           <li class="nav-item"><a th:href="@{/crew/task}" class="nav-link text-white">Manage Crew Task</a></li>
           <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program</a></li>
           <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program Report</a></li>
-          <li class="nav-item"><a th:href="@{/content/view}" class="nav-link text-white">View Content</a></li>
+          <li class="nav-item"><a th:href="@{/content/}" class="nav-link text-white">View Content</a></li>
+          <li class="nav-item"><a th:href="@{/content/manage}" class="nav-link text-white">Manage Content</a></li>
           <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Settings</a></li>
           <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Help</a></li>
           <li class="nav-item"><a th:href="@{/logout}" class="nav-link text-white">Logout</a></li>
         </ul>
       </div>
+    </div>
     </div>
     <!-- Main Content -->
     <div class="col-md-10">

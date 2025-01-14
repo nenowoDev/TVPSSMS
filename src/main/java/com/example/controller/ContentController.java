@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.example.entity.Content;
 import com.example.service.ContentService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/content")
@@ -78,9 +80,20 @@ public class ContentController {
  // 1.5 - View all contents (previously /manage)    
     @RequestMapping("/manage")
     public ModelAndView manageAllContent() {
-        List<Content> contents = contentService.getAllContent();
+    	String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Content> contents = contentService.getContentbyOwner(userName);
+        Optional<String> Orole=SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst();
+        String role="";
+        
+        role=Orole.orElse("");
+        
+        if(role.equals("ROLE_ADMIN")) {
+        	contents=contentService.getAllContent();
+        }
+        
         ModelAndView modelAndView = new ModelAndView("content/manageall"); // View name
         modelAndView.addObject("contents", contents);
+        modelAndView.addObject("role", role);
         return modelAndView;
     }
 
