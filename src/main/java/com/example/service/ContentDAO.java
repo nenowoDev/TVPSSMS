@@ -27,9 +27,9 @@ public class ContentDAO {
     }
 
     // 2 - Get content by ID
-    public Content findById(String contentID) {
+    public Content findById(int i) {
         try (Session session = sessionFactory.openSession()) {
-            return session.get(Content.class, contentID);
+            return session.get(Content.class, i);
         }
     }
 
@@ -52,7 +52,7 @@ public class ContentDAO {
     }
 
     // 5 - Delete content by ID
-    public void deleteById(String contentID) {
+    public void deleteById(int contentID) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Content content = session.get(Content.class, contentID);

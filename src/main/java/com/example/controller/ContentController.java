@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import com.example.entity.Content;
 import com.example.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,7 @@ public class ContentController {
     // 2 - View content by ID
     @RequestMapping("/{contentID}")
     public ModelAndView viewContentById(@PathVariable String contentID) {
-        Content content = contentService.getContentById(contentID);
+        Content content = contentService.getContentById(Integer.parseInt(contentID));
         ModelAndView modelAndView = new ModelAndView("content/view"); // View name
         if (content != null) {
             modelAndView.addObject("content", content);
@@ -49,7 +51,14 @@ public class ContentController {
     @RequestMapping("/add")
     public ModelAndView showAddContentForm() {
         ModelAndView modelAndView = new ModelAndView("content/add"); // View name for the form
-        modelAndView.addObject("content", new Content());
+        Content c=new Content();
+        
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        c.setOwner(userName);
+        
+        modelAndView.addObject("content", c);
+        
+        
         return modelAndView;
     }
 
@@ -57,7 +66,7 @@ public class ContentController {
     @RequestMapping("/add/save")
     public ModelAndView addContent(Content content) {
         contentService.createContent(content);
-        return new ModelAndView("redirect:/content/viewall"); // Redirect to view all content after saving
+        return new ModelAndView("redirect:/content/manage"); // Redirect to view all content after saving
     }
 
     
@@ -79,9 +88,12 @@ public class ContentController {
  // 5 - Update existing content (GET form)    
     @RequestMapping("/update/{contentID}")
     public ModelAndView showUpdateForm(@PathVariable String contentID) {
-        Content content = contentService.getContentById(contentID);  // Fetch content by ID
+        Content content = contentService.getContentById(Integer.parseInt(contentID));  // Fetch content by ID
+        
         ModelAndView modelAndView = new ModelAndView("content/update"); // View name for the update form
         modelAndView.addObject("content", content);  // Add content object to model
+        
+        
         return modelAndView;
     }
 
@@ -89,13 +101,13 @@ public class ContentController {
     @RequestMapping("/update/save")
     public ModelAndView updateContent(Content content) {
         contentService.updateContent(content);  // Call service to update content
-        return new ModelAndView("redirect:/content/viewall");  // Redirect to view all content after saving
+        return new ModelAndView("redirect:/content/manage");  // Redirect to view all content after saving
     }
     
     // 7 - Delete content
     @RequestMapping("/delete/{contentID}")
     public ModelAndView deleteContent(@PathVariable String contentID) {
-        contentService.deleteContentById(contentID);
-        return new ModelAndView("redirect:/content/viewall"); // Redirect to view all content after deletion
+        contentService.deleteContentById(Integer.parseInt(contentID));
+        return new ModelAndView("redirect:/content/manage"); // Redirect to view all content after deletion
     }
 }

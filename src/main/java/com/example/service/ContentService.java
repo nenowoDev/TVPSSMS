@@ -23,8 +23,8 @@ public class ContentService {
     }
 
     // 2 - Get content by ID
-    public Content getContentById(String contentID) {
-        return contentDao.findById(contentID);
+    public Content getContentById(int i) {
+        return contentDao.findById(i);
     }
 
     // 3 - Create a new content
@@ -38,7 +38,7 @@ public class ContentService {
     }
 
     // 5 - Delete content by ID
-    public void deleteContentById(String contentID) {
+    public void deleteContentById(int contentID) {
         contentDao.deleteById(contentID);
     }
 

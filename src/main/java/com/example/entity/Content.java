@@ -8,7 +8,8 @@ public class Content {
     
     @Id
     @Column(name = "contentID")
-    private String contentID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  
+    private int contentID;
 
     @Column(name = "contentTitle")
     private String contentTitle;
@@ -33,7 +34,7 @@ public class Content {
 
     public Content() {}
 
-    public Content(String contentID, String contentTitle, String contentDescription, String contentUploadDate, String contentType, String programID, String link, String owner) {
+    public Content(int contentID, String contentTitle, String contentDescription, String contentUploadDate, String contentType, String programID, String link, String owner) {
         this.contentID = contentID;
         this.contentTitle = contentTitle;
         this.contentDescription = contentDescription;
@@ -45,11 +46,11 @@ public class Content {
     }
 
     // Getter and Setter for contentID
-    public String getContentID() {
+    public int getContentID() {
         return contentID;
     }
 
-    public void setContentID(String contentID) {
+    public void setContentID(int contentID) {
         this.contentID = contentID;
     }
 
