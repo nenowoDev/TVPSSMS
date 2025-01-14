@@ -31,6 +31,12 @@ public class ContentController {
         List<Content> contents = contentService.getAllContent();
         ModelAndView modelAndView = new ModelAndView("content/viewall"); // View name
         modelAndView.addObject("contents", contents);
+        
+        Optional<String> Orole=SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst();
+        String role="";
+        role=Orole.orElse("");
+        modelAndView.addObject("role", role);
+        
         return modelAndView;
     }
 
@@ -44,6 +50,12 @@ public class ContentController {
         } else {
             modelAndView.addObject("message", "Content not found.");
         }
+        
+        Optional<String> Orole=SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst();
+        String role="";
+        role=Orole.orElse("");
+        modelAndView.addObject("role", role);
+        
         return modelAndView;
     }
 
@@ -60,6 +72,10 @@ public class ContentController {
         
         modelAndView.addObject("content", c);
         
+        Optional<String> Orole=SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst();
+        String role="";
+        role=Orole.orElse("");
+        modelAndView.addObject("role", role);
         
         return modelAndView;
     }
@@ -82,6 +98,11 @@ public class ContentController {
     public ModelAndView manageAllContent() {
     	String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         List<Content> contents = contentService.getContentbyOwner(userName);
+        
+        
+        ModelAndView modelAndView = new ModelAndView("content/manageall"); // View name
+        modelAndView.addObject("contents", contents);
+        
         Optional<String> Orole=SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst();
         String role="";
         
@@ -90,9 +111,6 @@ public class ContentController {
         if(role.equals("ROLE_ADMIN")) {
         	contents=contentService.getAllContent();
         }
-        
-        ModelAndView modelAndView = new ModelAndView("content/manageall"); // View name
-        modelAndView.addObject("contents", contents);
         modelAndView.addObject("role", role);
         return modelAndView;
     }
@@ -106,6 +124,10 @@ public class ContentController {
         ModelAndView modelAndView = new ModelAndView("content/update"); // View name for the update form
         modelAndView.addObject("content", content);  // Add content object to model
         
+        Optional<String> Orole=SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst();
+        String role="";
+        role=Orole.orElse("");
+        modelAndView.addObject("role", role);
         
         return modelAndView;
     }
