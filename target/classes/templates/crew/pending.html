@@ -10,21 +10,24 @@
 <body>
 <div class="container-fluid">
   <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-2 bg-primary text-white min-vh-100">
+   <!-- Sidebar -->
+    <div class="col-md-2 bg-primary text-white min-vh-100" th:fragment="sidebar">
       <div class="p-3">
-        <h5>Teacher Avatar</h5>
-        <p>Teacher<br>teacher@moe-dl.edu.my</p>
+        <!-- Centering only the image -->
+        <div class="d-flex justify-content-center mb-3">
+          <img src="https://static.vecteezy.com/system/resources/previews/042/891/253/non_2x/professional-teacher-avatar-illustration-for-education-concept-vector.jpg" alt="Teacher Avatar" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
+        
+        </div>
+        <h5>Teacher</h5>
         <ul class="nav flex-column">
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Home</a></li>
+          <li class="nav-item"><a th:href="@{/users/teacher}" class="nav-link text-white">Home</a></li>
           <li class="nav-item"><a th:href="@{/crew/registration}" class="nav-link text-white">Crew Registration List</a></li>
           <li class="nav-item"><a th:href="@{/crew/task}" class="nav-link text-white">Manage Crew Task</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Manage Program Report</a></li>
-          <li class="nav-item"><a th:href="@{/content/view}" class="nav-link text-white">View Content</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Settings</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Help</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Logout</a></li>
+          <li class="nav-item"><a th:href="@{/program/view}" class="nav-link text-white">Manage Program</a></li>
+          <li class="nav-item"><a th:href="@{/report/view}" class="nav-link text-white">Manage Program Report</a></li>
+          <li class="nav-item"><a th:href="@{/content/}" class="nav-link text-white">View Content</a></li>
+          <li class="nav-item"><a th:href="@{/content/manage}" class="nav-link text-white">Manage Content</a></li>
+          <li class="nav-item"><a th:href="@{/logout}" class="nav-link text-white">Logout</a></li>
         </ul>
       </div>
     </div>

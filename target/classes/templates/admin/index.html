@@ -11,17 +11,18 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
-    
     <div class="col-md-2 bg-dark text-white min-vh-100" th:fragment="sidebar">
       <div class="p-3">
-        <h5>Admin Avatar</h5>
-        <p>Admin<br>admin@moe-dl.edu.my</p>
+        <!-- Centering only the image -->
+        <div class="d-flex justify-content-center mb-3">
+          <img src="https://cdn-icons-png.flaticon.com/512/1794/1794749.png" alt="Admin Avatar" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
+        </div>
+        <h5>Admin</h5>
         <ul class="nav flex-column">
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Dashboard</a></li>
+          <li class="nav-item"><a th:href="@{/users/admin}" class="nav-link text-white">Dashboard</a></li>
           <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Program</a></li>
           <li class="nav-item"><a th:href="@{/content/}" class="nav-link text-white">View Contents</a></li>
           <li class="nav-item"><a th:href="@{/content/manage}" class="nav-link text-white">Manage Contents</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Help</a></li>
           <li class="nav-item"><a th:href="@{/logout}" class="nav-link text-white">Logout</a></li>
         </ul>
       </div>
@@ -33,24 +34,24 @@
         <!-- Welcome Section -->
         <div class="mb-4">
           <h1>Welcome to the Admin Dashboard</h1>
-          <p class="text-muted">Manage users, settings, and system operations effectively.</p>
+          <p class="text-muted">Manage program and contents effectively.</p>
         </div>
         <!-- System Notices Section -->
         <div class="mb-4">
           <h3>System Notices</h3>
           <ul class="list-group">
-            <li class="list-group-item">New user role policies implemented.</li>
-            <li class="list-group-item">System backup completed successfully.</li>
-            <li class="list-group-item">Security updates available for installation.</li>
+            <li class="list-group-item">New program has been updated</li>
+            <li class="list-group-item">View new content</li>
+            <li class="list-group-item">Manage contents</li>
           </ul>
         </div>
         <!-- Quick Links Section -->
         <div>
           <h3>Quick Links</h3>
           <div class="d-flex gap-3">
-            <a th:href="@{/user/manage}" class="btn btn-primary">Manage Users</a>
-            <a th:href="@{/reports/view}" class="btn btn-secondary">View Reports</a>
-            <a th:href="@{/system/settings}" class="btn btn-warning">System Settings</a>
+            <a th:href="@{/user/manage}" class="btn btn-primary">View Program</a>
+            <a th:href="@{/content/}" class="btn btn-secondary">View Contents</a>
+            <a th:href="@{/content/manage}" class="btn btn-warning">Manage Contents</a>
           </div>
         </div>
       </div>

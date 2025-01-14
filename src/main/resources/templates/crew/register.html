@@ -11,16 +11,17 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-md-2 bg-success text-white min-vh-100">
+    <div class="col-md-2 bg-success text-white min-vh-100" th:fragment="sidebar">
       <div class="p-3">
-        <h5>Student Avatar</h5>
-        <p>Student<br>student@moe-dl.edu.my</p>
+        <!-- Centering only the image -->
+        <div class="d-flex justify-content-center mb-3">
+          <img src="https://cdn-icons-png.flaticon.com/512/3429/3429425.png" style="width: 100px; height: 100px;">
+        </div>
+        <h5>Student</h5>
         <ul class="nav flex-column">
           <li class="nav-item"><a th:href="@{/users/student}" class="nav-link text-white">Dashboard</a></li>
           <li class="nav-item"><a th:href="@{/crew/register}" class="nav-link text-white">Crew Registration</a></li>
-          <li class="nav-item"><a th:href="@{/assignments/view}" class="nav-link text-white">View Content</a></li>
-          <li class="nav-item"><a th:href="@{/grades/view}" class="nav-link text-white">Settings</a></li>
-          <li class="nav-item"><a th:href="@{#}" class="nav-link text-white">Help</a></li>
+          <li class="nav-item"><a th:href="@{/content/}" class="nav-link text-white">View Content</a></li>
           <li class="nav-item"><a th:href="@{/logout}" class="nav-link text-white">Logout</a></li>
         </ul>
       </div>
