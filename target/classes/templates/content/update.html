@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Content</title>
+</head>
+<body>
+    <h1>Update Content</h1>
+    <form th:action="@{/content/update/save}" th:object="${content}" method="post">
+        <!-- Hidden input field for contentID -->
+        <input type="hidden" th:field="*{contentID}" id="contentID"/>
+
+        <label for="contentTitle">Title</label>
+        <input type="text" th:field="*{contentTitle}" id="contentTitle" required/><br/>
+
+        <label for="contentDescription">Description</label>
+        <input type="text" th:field="*{contentDescription}" id="contentDescription" /><br/>
+
+        <label for="contentUploadDate">Upload Date</label>
+        <input type="text" th:field="*{contentUploadDate}" id="contentUploadDate" /><br/>
+
+        <label for="contentType">Content Type</label>
+        <input type="text" th:field="*{contentType}" id="contentType" /><br/>
+
+        <label for="programID">Program ID</label>
+        <input type="text" th:field="*{programID}" id="programID" /><br/>
+
+        <label for="link">Link</label>
+        <input type="text" th:field="*{link}" id="link" /><br/>
+
+        <label for="owner">Owner</label>
+        <input type="text" th:field="*{owner}" id="owner" /><br/>
+
+        <button type="submit">Update</button>
+    </form>
+
+    <a th:href="@{/content/viewall}">Back to All Content</a>
+</body>
+</html>

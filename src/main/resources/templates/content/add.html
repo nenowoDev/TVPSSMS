@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Content</title>
+</head>
+<body>
+    <h1>Add New Content</h1>
+    <form th:action="@{/content/add/save}" th:object="${content}" method="post">
+        <label for="contentID">Content ID</label>
+        <input type="text" th:field="*{contentID}" id="contentID" required/><br/>
+
+        <label for="contentTitle">Title</label>
+        <input type="text" th:field="*{contentTitle}" id="contentTitle" required/><br/>
+
+        <label for="contentDescription">Description</label>
+        <input type="text" th:field="*{contentDescription}" id="contentDescription" /><br/>
+
+        <label for="contentUploadDate">Upload Date</label>
+        <input type="text" th:field="*{contentUploadDate}" id="contentUploadDate" /><br/>
+
+        <label for="contentType">Content Type</label>
+        <input type="text" th:field="*{contentType}" id="contentType" /><br/>
+
+        <label for="programID">Program ID</label>
+        <input type="text" th:field="*{programID}" id="programID" /><br/>
+
+        <label for="link">Link</label>
+        <input type="text" th:field="*{link}" id="link" /><br/>
+
+        <label for="owner">Owner</label>
+        <input type="text" th:field="*{owner}" id="owner" /><br/>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <a th:href="@{/content/viewall}">Back to All Content</a>
+</body>
+</html>

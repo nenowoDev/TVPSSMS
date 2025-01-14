@@ -1,13 +1,13 @@
 package com.example.controller;
 
+import com.example.entity.Content;
+import com.example.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.entity.Content;
-import com.example.service.ContentService;
 import java.util.List;
 
 @Controller
@@ -21,53 +21,81 @@ public class ContentController {
         this.contentService = contentService;
     }
 
-    // View the home page
-    @RequestMapping("/home")
-    public ModelAndView viewHome() {
-        ModelAndView mav = new ModelAndView("content/home");
-        return mav;
+    // 1 - View all contents (previously /viewall)    
+    @RequestMapping("/")
+    public ModelAndView viewAllContent() {
+        List<Content> contents = contentService.getAllContent();
+        ModelAndView modelAndView = new ModelAndView("content/viewall"); // View name
+        modelAndView.addObject("contents", contents);
+        return modelAndView;
     }
 
-    // View all content
-    @RequestMapping("/view")
-    public ModelAndView viewContent() {
-        ModelAndView mav = new ModelAndView("content/view");
-        
-        // Get list of content from service
-        List<Content> contentList = contentService.getAllContent();
-
-        // Add the list to the model
-        mav.addObject("contentList", contentList);
-        return mav;
-    }
-
-    // View a single content item by ID
-    @RequestMapping("/view/{contentID}")
-    public ModelAndView viewContent(@PathVariable("contentID") String contentID) {
-        ModelAndView mav = new ModelAndView("content/viewContent");
-
-        // Get content details from the service
+    // 2 - View content by ID
+    @RequestMapping("/{contentID}")
+    public ModelAndView viewContentById(@PathVariable String contentID) {
         Content content = contentService.getContentById(contentID);
-
-        // Add the content to the model
-        mav.addObject("content", content);
-        return mav;
+        ModelAndView modelAndView = new ModelAndView("content/view"); // View name
+        if (content != null) {
+            modelAndView.addObject("content", content);
+        } else {
+            modelAndView.addObject("message", "Content not found.");
+        }
+        return modelAndView;
     }
 
-    // View analytics for a specific content item
-    @RequestMapping("/analytics/{contentID}")
-    public ModelAndView viewAnalytics(@PathVariable("contentID") String contentID) {
-        ModelAndView mav = new ModelAndView("content/analytics");
+    
+//    TEACHER
+    // 3 - Add new content (GET form)
+    @RequestMapping("/add")
+    public ModelAndView showAddContentForm() {
+        ModelAndView modelAndView = new ModelAndView("content/add"); // View name for the form
+        modelAndView.addObject("content", new Content());
+        return modelAndView;
+    }
 
-        // Get content details from the service
-        Content content = contentService.getContentById(contentID);
+    // 4 - Handle add content (POST form)
+    @RequestMapping("/add/save")
+    public ModelAndView addContent(Content content) {
+        contentService.createContent(content);
+        return new ModelAndView("redirect:/content/viewall"); // Redirect to view all content after saving
+    }
 
-        // Add the content and analytics to the model
-        mav.addObject("content", content);
+    
+// ADMIN AND TEACHER
+    
+    
+    
+    
+ // 1.5 - View all contents (previously /manage)    
+    @RequestMapping("/manage")
+    public ModelAndView manageAllContent() {
+        List<Content> contents = contentService.getAllContent();
+        ModelAndView modelAndView = new ModelAndView("content/manageall"); // View name
+        modelAndView.addObject("contents", contents);
+        return modelAndView;
+    }
 
-        // For demo purposes, we can add the analytics here
-        mav.addObject("analytics", "Analytics data for content " + contentID);
+    
+ // 5 - Update existing content (GET form)    
+    @RequestMapping("/update/{contentID}")
+    public ModelAndView showUpdateForm(@PathVariable String contentID) {
+        Content content = contentService.getContentById(contentID);  // Fetch content by ID
+        ModelAndView modelAndView = new ModelAndView("content/update"); // View name for the update form
+        modelAndView.addObject("content", content);  // Add content object to model
+        return modelAndView;
+    }
 
-        return mav;
+    // 6 - Handle update content (POST form)
+    @RequestMapping("/update/save")
+    public ModelAndView updateContent(Content content) {
+        contentService.updateContent(content);  // Call service to update content
+        return new ModelAndView("redirect:/content/viewall");  // Redirect to view all content after saving
+    }
+    
+    // 7 - Delete content
+    @RequestMapping("/delete/{contentID}")
+    public ModelAndView deleteContent(@PathVariable String contentID) {
+        contentService.deleteContentById(contentID);
+        return new ModelAndView("redirect:/content/viewall"); // Redirect to view all content after deletion
     }
 }

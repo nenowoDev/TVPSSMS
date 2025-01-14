@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Content</title>
+</head>
+<body>
+    <h1>All Content</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Content ID</th>
+                <th>Content Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="content : ${contents}">
+                <td th:text="${content.contentID}"></td>
+                <td th:text="${content.contentTitle}"></td>
+                <td>
+                    <a th:href="@{/content/{contentID}(contentID=${content.contentID})}">View</a> | 
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
