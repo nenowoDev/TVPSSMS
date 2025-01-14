@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -62,6 +63,7 @@ public class ContentController {
     
 //    TEACHER
     // 3 - Add new content (GET form)
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     @RequestMapping("/add")
     public ModelAndView showAddContentForm() {
         ModelAndView modelAndView = new ModelAndView("content/add"); // View name for the form
@@ -94,6 +96,7 @@ public class ContentController {
     
     
  // 1.5 - View all contents (previously /manage)    
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     @RequestMapping("/manage")
     public ModelAndView manageAllContent() {
     	String userName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -117,6 +120,7 @@ public class ContentController {
 
     
  // 5 - Update existing content (GET form)    
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     @RequestMapping("/update/{contentID}")
     public ModelAndView showUpdateForm(@PathVariable String contentID) {
         Content content = contentService.getContentById(Integer.parseInt(contentID));  // Fetch content by ID
@@ -133,6 +137,7 @@ public class ContentController {
     }
 
     // 6 - Handle update content (POST form)
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     @RequestMapping("/update/save")
     public ModelAndView updateContent(Content content) {
         contentService.updateContent(content);  // Call service to update content
@@ -140,6 +145,7 @@ public class ContentController {
     }
     
     // 7 - Delete content
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     @RequestMapping("/delete/{contentID}")
     public ModelAndView deleteContent(@PathVariable String contentID) {
         contentService.deleteContentById(Integer.parseInt(contentID));
