@@ -2,90 +2,55 @@ package com.example.service;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
 
 import com.example.entity.Content;
 
 @Repository
+@Transactional
 public class ContentDAO {
 
-    private final SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    @Autowired
-    public ContentDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    // 1 - Get all content
     public List<Content> findAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Content", Content.class).list();
-        }
+        return entityManager.createQuery("FROM Content", Content.class).getResultList();
     }
 
-    // 2 - Get content by ID
-    public Content findById(int i) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(Content.class, i);
-        }
+    public Content findById(int id) {
+        return entityManager.find(Content.class, id);
     }
 
-    // 3 - Create a new content
     public void save(Content content) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.save(content);
-            session.getTransaction().commit();
-        }
+        entityManager.persist(content);
     }
 
-    // 4 - Update an existing content
     public void update(Content content) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.update(content);
-            session.getTransaction().commit();
-        }
+        entityManager.merge(content);
     }
 
-    // 5 - Delete content by ID
     public void deleteById(int contentID) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Content content = session.get(Content.class, contentID);
-            if (content != null) {
-                session.delete(content);
-            }
-            session.getTransaction().commit();
+        Content content = entityManager.find(Content.class, contentID);
+        if (content != null) {
+            entityManager.remove(content);
         }
     }
 
-    // 6 - Search for content by title
     public List<Content> searchByTitle(String title) {
-        try (Session session = sessionFactory.openSession()) {
-            String query = "FROM Content WHERE LOWER(contentTitle) LIKE :title";
-            return session.createQuery(query, Content.class)
-                          .setParameter("title", "%" + title.toLowerCase() + "%")
-                          .list();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return entityManager.createQuery(
+                "FROM Content WHERE LOWER(contentTitle) LIKE :title", Content.class)
+                .setParameter("title", "%" + title.toLowerCase() + "%")
+                .getResultList();
     }
-    
- // 7 - Get content by owner
+
     public List<Content> findByOwner(String owner) {
-        try (Session session = sessionFactory.openSession()) {
-            String query = "FROM Content WHERE LOWER(owner) = :owner";
-            return session.createQuery(query, Content.class)
-                          .setParameter("owner", owner.toLowerCase())
-                          .list();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return entityManager.createQuery(
+                "FROM Content WHERE LOWER(owner) = :owner", Content.class)
+                .setParameter("owner", owner.toLowerCase())
+                .getResultList();
     }
 }

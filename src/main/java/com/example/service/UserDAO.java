@@ -1,28 +1,25 @@
 package com.example.service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.example.entity.User;
 
 @Repository
+@Transactional
 public class UserDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    @Transactional
     public void save(User user) {
-        Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(user);
+        entityManager.merge(user);
     }
 
-    @Transactional
     public User findByUsername(String username) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(User.class, username);
+        return entityManager.find(User.class, username);
     }
 }

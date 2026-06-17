@@ -4,8 +4,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
@@ -20,11 +20,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         String redirectUrl = "/";
         if (role.equals("ROLE_ADMIN")) {
-            redirectUrl = "/SpringLabApp3/users/admin";
+            redirectUrl = "/users/admin";
         } else if (role.equals("ROLE_TEACHER")) {
-            redirectUrl = "/SpringLabApp3/users/teacher";
+            redirectUrl = "/users/teacher";
         } else if (role.equals("ROLE_STUDENT")) {
-            redirectUrl = "/SpringLabApp3/users/student";
+            redirectUrl = "/users/student";
         }
 
         response.sendRedirect(redirectUrl);

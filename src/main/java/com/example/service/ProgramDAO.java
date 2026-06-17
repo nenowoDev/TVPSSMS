@@ -1,85 +1,57 @@
 package com.example.service;
 
-import com.example.entity.Program;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+
+import org.springframework.stereotype.Repository;
+
+import com.example.entity.Program;
+
 @Repository
+@Transactional
 public class ProgramDAO {
 
-    private final SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    @Autowired
-    public ProgramDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    // 1. Find all programs
     public List<Program> findAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("FROM Program", Program.class).list();
-        }
+        return entityManager.createQuery("FROM Program", Program.class).getResultList();
     }
-    
- // Find a program by ID
+
     public Program findById(long id) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(Program.class, id);
-        }
+        return entityManager.find(Program.class, id);
     }
 
-    // 2. Find a program by name
     public Program findByName(String programName) {
-        try (Session session = sessionFactory.openSession()) {
-            String query = "FROM Program WHERE programName = :programName";
-            return session.createQuery(query, Program.class)
-                    .setParameter("programName", programName)
-                    .uniqueResult();
-        }
+        List<Program> results = entityManager.createQuery(
+                "FROM Program WHERE programName = :programName", Program.class)
+                .setParameter("programName", programName)
+                .getResultList();
+        return results.isEmpty() ? null : results.get(0);
     }
 
-    // 3. Save a new program
     public void save(Program program) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.save(program);
-            session.getTransaction().commit();
-        }
+        entityManager.persist(program);
     }
 
-    // 4. Update an existing program
     public void update(Program program) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.update(program);
-            session.getTransaction().commit();
-        }
+        entityManager.merge(program);
     }
 
-
-    // Delete a program by ID
     public void deleteById(long id) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Program program = session.get(Program.class, id);
-            if (program != null) {
-                session.delete(program);
-            }
-            session.getTransaction().commit();
+        Program program = entityManager.find(Program.class, id);
+        if (program != null) {
+            entityManager.remove(program);
         }
     }
 
-    // 6. Search for programs by name (case-insensitive partial match)
     public List<Program> searchByName(String partialName) {
-        try (Session session = sessionFactory.openSession()) {
-            String query = "FROM Program WHERE LOWER(programName) LIKE :partialName";
-            return session.createQuery(query, Program.class)
-                    .setParameter("partialName", "%" + partialName.toLowerCase() + "%")
-                    .list();
-        }
+        return entityManager.createQuery(
+                "FROM Program WHERE LOWER(programName) LIKE :partialName", Program.class)
+                .setParameter("partialName", "%" + partialName.toLowerCase() + "%")
+                .getResultList();
     }
 }
